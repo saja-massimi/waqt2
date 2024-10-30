@@ -1,15 +1,34 @@
-<?php include("../widgets/navbar.php"); ?>
-<!-- 
-Coupun Code
-<form class="mb-30" action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary bg-danger text-white">Apply Coupon</button>
-                        </div>
-                    </div> -->
+<?php require_once("../widgets/head.php"); ?>
+<?php require_once("../widgets/navbar.php"); ?>
 
-<!-- Checkout Start -->
+<?php
+
+if (isset($_POST['checkout'])) {
+
+    session_start();
+    $user_id = $_SESSION['user'];
+
+    if (!isset($user_id)) {
+        header('Location: ../user_pages/login.php');
+    }
+    $orderModel = new orderModel();
+
+    $profileModel = new profileModel();
+    print_r($profileModel->getProfile($user_id));
+}
+?>
+
+<div>
+    Coupun Code
+    <form class="mb-30" action="">
+        <div class="input-group">
+            <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
+            <div class="input-group-append">
+                <button class="btn btn-primary bg-danger text-white">Apply Coupon</button>
+            </div>
+        </div>
+</div>
+
 <div class="container-fluid">
     <div class="row px-xl-5">
         <div class="col-lg-8">
@@ -171,59 +190,60 @@ Coupun Code
                             <button type="button" class="btn btn-primary bg-warning text-white font-weight-bold my-2 py-3 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">Paypal</button>
                             <?php include "paymentvalid.php" ?>
                             <!-- Modal for PayPal Payment -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title text-center w-100 text-warning bg-dark" id="exampleModalLabel " style="color: yellow; font-weight: 800;">
-                                                PayPal Payment
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form id="paymentForm" method="POST">
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <input type="text" id="typeText" name="cardNumber" class="form-control" minlength="16" maxlength="16" placeholder="Card Number" required>
-                                                    <small style="color:red;"><?= $errors['cardNumber'] ?? ''; ?></small>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <input type="text" id="typeName" name="nameOnCard" class="form-control" placeholder="Name on Card" required>
-                                                    <small style="color:red;"><?= $errors['nameOnCard'] ?? ''; ?></small>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" id="typeExp" name="expiration" class="form-control" minlength="5" maxlength="7" placeholder="Expiration (MM/YY)" required>
-                                                        <small style="color:red;"><?= $errors['expiration'] ?? ''; ?></small>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="password" id="typeCvv" name="cvv" class="form-control" minlength="3" maxlength="3" placeholder="CVV" required>
-                                                        <small style="color:red;"><?= $errors['cvv'] ?? ''; ?></small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn bg-warning text-white " data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary bg-danger text-white" name="submitBtn">Submit Payment</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control">
-                            <button type="button" class="btn btn-block btn-primary font-weight-bold py-3 bg-danger text-white">Paypal</button>
-                        </div>
-                    </div>
-                    <button class="btn btn-block btn-primary font-weight-bold py-3 bg-danger text-white">Place Order</button>
-                </div>
-
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100 text-warning bg-dark" id="exampleModalLabel " style="color: yellow; font-weight: 800;">
+                    PayPal Payment
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form id="paymentForm" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" id="typeText" name="cardNumber" class="form-control" minlength="16" maxlength="16" placeholder="Card Number" required>
+                        <small style="color:red;"><?= $errors['cardNumber'] ?? ''; ?></small>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" id="typeName" name="nameOnCard" class="form-control" placeholder="Name on Card" required>
+                        <small style="color:red;"><?= $errors['nameOnCard'] ?? ''; ?></small>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" id="typeExp" name="expiration" class="form-control" minlength="5" maxlength="7" placeholder="Expiration (MM/YY)" required>
+                            <small style="color:red;"><?= $errors['expiration'] ?? ''; ?></small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="password" id="typeCvv" name="cvv" class="form-control" minlength="3" maxlength="3" placeholder="CVV" required>
+                            <small style="color:red;"><?= $errors['cvv'] ?? ''; ?></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-warning text-white " data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary bg-danger text-white" name="submitBtn">Submit Payment</button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="form-group">
+    <div class="custom-control">
+        <button type="button" class="btn btn-primary font-weight-bold  bg-danger text-white">Paypal</button>
+        <button class="btn btn-primary font-weight-bold  bg-danger text-white">Place Order</button>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
 
 
 
 
 
-        <?php include("../widgets/footer.php"); ?>
+<?php include("../widgets/footer.php"); ?>
