@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/face.css" /> 
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/media.css" />
+    <link rel="shortcut icon" href="./Media/logo.png">
+    <title>Signin & Sign up</title>
+
+    <style>
+      .svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+   
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="svg">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 1920 911">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: none;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 22.38px;
+              fill-rule: evenodd;
+              stroke: url(#linear-gradient);
+            }
+          </style>
+          <linearGradient id="linear-gradient" x1="1210.64" y1="638.188" x2="1210.64" y2="78.313" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ff0d0d"/>
+            <stop offset="1" stop-color="#1e1e1f"/>
+          </linearGradient>
+        </defs>
+        <path class="cls-1" d="M1920,165S960.235-72.189,874,238c-8.437,30.35-101.774,99.553-198,130-85.368,27.011-135.525,26.744-161,47-49.186,39.109,44.378,110.1,112,170,142.125,125.9,798.18,5.194,708-123-197.31-280.48,251-218,251-218l-54,210-66-130-29,136-88-114">
+          <animate attributeName="stroke-dasharray" from="0, 1000" to="1000, 0" dur="2s" fill="freeze" />
+        </path>
+      </svg>
+      
+      
+    </div>
+    <div class="wrapper">
+    
+      <div class="form-container sign-in">
+        <form class="form-lg" action="#">
+          <!-- 3d face start-->
+          <div class="face-3d">
+            <img src="Media/logo1.png" style="width: 100%;height: 100%;" alt="" srcset="">
+          </div>
+          <!-- 3d face end-->
+          <h2>Admin login</h2>
+          <div class="form-group">
+            <input id="login_em" type="text" required />
+            <i class="fas fa-user"></i>
+            <label id="login_em_label" for="">Email</label>
+          </div>
+          <div class="form-group">
+            <input class="secure-text" id="login_pw" type="password" required />
+            <i class="fas fa-lock"></i>
+            <label id="login_pw_label" for="">password</label>
+          </div>
+
+      
+            <label id="showPasswordToggle" for="showPasswordCheck"
+            >Show
+            <input id="showPasswordCheck" type="checkbox" />
+            <div class="indicator"></div>
+          </label>
+       
+          <!-- <div class="forgot-pass">
+            <a href="#">forgot password?</a>
+          </div> -->
+          <button type="submit" class="btn">login</button>
+          <div class="link">
+            <p class="error lg-error"></p>
+            <label>or</label>
+
+<!--google login start-->
+            <div class="google-login"
+            id="g_id_onload"
+            data-client_id="364521177272-dco06l33lfdv9at0ra5pkg5tjr3bdc8b.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="popup"
+            data-param="in"
+            data-callback="auth_info"
+            data-auto_prompt="false"
+          ></div>
+    
+          <div
+            class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="continue_with"
+            data-size="large"
+            data-logo_alignment="left"
+          ></div>
+          <!--google login End-->
+
+       
+
+          
+        </div>
+
+        
+
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <script
+      src="https://kit.fontawesome.com/9e5ba2e3f5.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+  ></script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init({
+        publicKey: "uoHhCYT1WpaarOefU",
+      });
+    })();
+  </script>
+    <script src="./js/script.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<script>
+  "use strict";
+  // EmailJS parameters
+  const templateParams = {
+    name: "omar",
+    email: "g@gmail.com",
+    message: "omsar",
+  };
+
+  emailjs.send("service_d7lit7t", "template_llrt1qs", templateParams).then(
+    function (response) {
+      document.getElementById("error").innerHTML =
+        "<h3 style='color:green;'>Thank you for your submission!</h3>";
+    },
+    function (error) {
+      document.getElementById("error").innerHTML =
+        "There was an error sending the message.";
+    }
+  );
+</script>
