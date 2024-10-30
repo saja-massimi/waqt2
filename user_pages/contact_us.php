@@ -1,6 +1,6 @@
 <?php  
 include("../widgets/navbar.php");
-include("dbconnection.php"); 
+include("dbconnection.php"); // Include database connection
 ?>
 
 <!DOCTYPE html>
@@ -101,38 +101,14 @@ include("dbconnection.php");
 </head>
 <body>
 <?php
-if (isset($_POST['submit_contact'])) {
-    $contact_name = $_POST['name'];
-    $contact_email = $_POST['email'];
-    $contact_phone = $_POST['phone_number'];
-    $contact_subject = $_POST['subject'];
-    $contact_message = $_POST['message'];
-
-    try {
-        // Prepare the SQL statement
-        $sql = "INSERT INTO `contact_us`(`name`, `email`, `phone_number`, `subject`, `message`) 
-                VALUES (:name, :email, :phone_number, :subject, :message)";
-        $stmt = $dbconnection->prepare($sql);
-
-        // Bind parameters and execute the statement
-        $stmt->execute([
-            'name' => $contact_name,
-            'email' => $contact_email,
-            'phone_number' => $contact_phone,
-            'subject' => $contact_subject,
-            'message' => $contact_message
-        ]);
-
-        echo "<script>alert('Data inserted successfully!');</script>";
-    } catch (PDOException $e) {
-        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
-    }
+if(isset($_GET['message'])){
+    echo '<h6 class="container">'.$_GET['message'].'</h6>';
 }
 ?>
 
 <section class="content container">
     <h2>Contact Waqt Team</h2>
-    <form action="contact_us.php" method="post">
+    <form action="controllers/contactController.php" method="post">
         <div class="row mb-3">
             <div class="col-md-6 mb-3 mb-md-0">
                 <input type="text" required placeholder="Full Name" id="name" class="form-control item" name="name">
@@ -143,7 +119,7 @@ if (isset($_POST['submit_contact'])) {
         </div>
         <div class="row mb-3">
             <div class="col-md-6 mb-3 mb-md-0">
-                <input type="text" minlength="9" required placeholder="Phone Number" id="phone" name="phone_number" class="form-control item">
+                <input type="text" maxlength="10" required placeholder="Phone Number" id="phone"  name="phone_number" class="form-control item">
             </div>
             <div class="col-md-6">
                 <input type="text" required placeholder="Subject" id="subject" name="subject" class="form-control item">
@@ -152,12 +128,55 @@ if (isset($_POST['submit_contact'])) {
         <div class="textarea-field field mb-3">
             <textarea name="message" required id="Message" cols="30" rows="5" placeholder="Your Message" class="form-control item" minlength="20"></textarea>
         </div>
-        <button type="submit" class="btn btn-danger submit" name="submit_contact">Send message</button>
+        <button type="submit" class="btn btn-danger submit" name="submit_contact" id="submit_contact">Send message</button>
     </form>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script>
+        // Function to show SweetAlert based on the URL parameter
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+
+            if (status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Message Sent!',
+                    text: 'Your message was sent successfully.',
+                    confirmButtonColor: '#3085d6',
+                    timer: 3000
+                });
+            } else if (status === 'error') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Send',
+                    text: 'There was an issue submitting your message. Please try again.',
+                    confirmButtonColor: '#d33',
+                    timer: 3000
+                });
+            } else if (status === 'connection_failed') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Connection Error',
+                    text: 'Failed to connect to the database.',
+                    confirmButtonColor: '#d33',
+                    timer: 3000
+                });
+            }
+        });
+  
+        
+        
+
+    </script>
+
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
 
 </body>
 </html>
