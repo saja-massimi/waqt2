@@ -1,3 +1,5 @@
+
+
 function add_cart(product_id) {
     console.log("Button clicked!");
     console.log(product_id);
@@ -15,10 +17,16 @@ function add_cart(product_id) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert('Product added to cart successfully!');
+
+                Swal.fire({
+                    title: "Product added to cart successfully!",
+
+                    icon: "success"
+                });
             } else {
                 alert(data.message);
             }
         })
         .catch(error => console.error('Error adding product to cart:', error));
+
 }

@@ -54,4 +54,7 @@ class productsModel extends Dbh
 
         return $result ? $result : 0;
     }
+    
+
+    
 }

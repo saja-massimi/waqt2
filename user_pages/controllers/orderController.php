@@ -14,10 +14,7 @@ if (isset($_POST['checkout'])) {
     if (!isset($user_id)) {
         header('Location: ../user_pages/login.php');
     }
-    $orderModel = new orderModel();
-
-    $profileModel = new profileModel();
-    print_r($profileModel->getProfile($user_id));
+    // $orderModel = new orderModel();
 
 
 
