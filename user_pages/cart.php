@@ -87,10 +87,9 @@
                             <h5>Total</h5>
                             <h5><?= htmlspecialchars($total + 5) ?> JOD</h5>
                         </div>
-                        <form method="POST" action="./controllers/orderController.php">
-                            <input type="hidden" name="order_total" value="<?= $total + 5 ?>">   
+                        <a href="./checkout.php">
                             <button class="btn btn-block btn-primary bg-danger text-white font-weight-bold my-3 py-3" name="checkout">Proceed To Checkout</button>
-                        </form>
+                        </a>
                     </div>
                 </div>
             </div>
