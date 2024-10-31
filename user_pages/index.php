@@ -114,7 +114,7 @@
 
 
     <!-- Categories Start -->
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">Our Categories</span></h2>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Our Categories</span></h2>
     <div class="container-fluid pt-5 pb-3" id="categories">
         <div class="row px-xl-5">
             <div class="col-md-6">
@@ -184,6 +184,9 @@
     </div>
     </div>
     <!-- Products End -->
+
+
+
 
 
     <!-- Products Start -->
@@ -442,11 +445,14 @@
                     <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
                         <img src="../img/vendor-6.jpg" alt="Vendor 6">
                     </div>
-
+                    
                 </div>
             </div>
         </div>
     </div>
+
+
+
     <!-- Vendor End -->
 
 
@@ -462,34 +468,24 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="../lib/easing/easing.min.js"></script>
-    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.vendor-carousel').owlCarousel({
-                loop: true,
-                margin: 0,
-                nav: false,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    576: {
-                        items: 3
-                    },
-                    768: {
-                        items: 4
-                    },
-                    992: {
-                        items: 5
-                    },
-                    1200: {
-                        items: 7
-                    }
-                }
-            });
+    $(document).ready(function(){
+        $('.vendor-carousel').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            responsive: {
+                0: { items: 1 },
+                576: { items: 3 },
+                768: { items: 4 },
+                992: { items: 5 },
+                1200: { items: 7 }
+            }
         });
-    </script>
+    });
+</script>
 
     <!-- Contact Javascript File -->
     <script src="../mail/jqBootstrapValidation.min.js"></script>
