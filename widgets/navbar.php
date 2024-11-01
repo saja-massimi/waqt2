@@ -14,6 +14,7 @@ if (isset($_SESSION['user'])) {
   $statment = $dbconnection->prepare($query);
   $statment->bindParam(':user_id', $user_id, PDO::PARAM_INT);
   $statment->execute();
+  $result = $statment->fetch(PDO::FETCH_ASSOC);
 }
 
 
