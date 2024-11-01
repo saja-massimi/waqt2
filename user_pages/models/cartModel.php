@@ -24,7 +24,10 @@ class cartModel extends Dbh
           $existingProduct = $check_stmt->fetch();
 
           if ($existingProduct) {
-               $update_query = "UPDATE cart_items SET quantity = quantity + 1 WHERE cart_id = ? AND watch_id = ?";
+               if ($this->getWatchQuantity($product_id) <= $existingProduct['quantity']) {
+                    return false;
+               }
+               $update_query = "UPDATE cart_items SET quantity = quantity + 1 WHERE cart_id = ?  AND watch_id = ?";
                $update_stmt = $pdo->prepare($update_query);
                return $update_stmt->execute([$cartID, $product_id]);
           } else {
@@ -49,9 +52,8 @@ class cartModel extends Dbh
           $product_query = "SELECT * FROM watches WHERE watch_id = ? AND is_deleted = 0";
           $product_stmt = $pdo->prepare($product_query);
           $product_stmt->execute([$watch_id]);
-          
-          return $product_stmt->fetch();
 
+          return $product_stmt->fetch();
      }
 
      public function removeProductFromCart($cartID, $product_id)

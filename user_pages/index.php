@@ -348,96 +348,74 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <!-- Products End -->
 
+    <!--  Vendor Start -->
+    <div class="container-fluid py-5 ">
+        <div class="row px-xl-5 ">
+            <div class="col">
+                <div class="row owl-carousel vendor-carousel d-flex justify-content-center">
 
-    <!-- Vendor Start -->
-<<<<<<< HEAD
-    <div class="container-fluid  d-flex justify-content-between">
-        <div class="row px-xl-5 d-flex justify-content-between">
-            <div class=" d-flex justify-content-between">
-                <div class="row owl-carousel vendor-carousel" style=" margin:0; padding:0;">
-                    <div class="cpl bg-light p-4 d-flex justify-content-between w-auto">
-                        <img src="../img/vendor-1.jpg" alt="Vendor 1">
-                    </div>
-                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
-                        <img src="../img/vendor-2.jpg" alt="Vendor 2">
-                    </div>
-                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
-                        <img src="../img/vendor-3.jpg" alt="Vendor 3">
-                    </div>
-                    <div class=" colbg-light p-4 d-flex justify-content-between w-auto">
-                        <img src="../img/vendor-4.jpg" alt="Vendor 4">
-                    </div>
-                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
-                        <img src="../img/vendor-5.jpg" alt="Vendor 5">
-                    </div>
-                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
-                        <img src="../img/vendor-6.jpg" alt="Vendor 6">
-                    </div>
-                    
-=======
-<!-- <div class="container-fluid py-5 ">
-    <div class="row px-xl-5 ">
-        <div class="col">
-            <div class="row owl-carousel vendor-carousel d-flex justify-content-center">
+                    <?php if (count($brands) == 0): ?>
+                        <p class="text-center w-100">No featured products available.</p>
+                    <?php else: ?>
+                        <?php foreach ($brands as $brand): ?>
+                            <div class="img-fluid bg-light p-4">
+                                <img style="width: 200px; height:200px; gap:30px" src="<?php echo $brand['brand_image']; ?>" alt="<?php echo $brand['brand_name']; ?>">
+                            </div>
 
-            <?php if (count($brands) == 0): ?>
-            <p class="text-center w-100">No featured products available.</p>
-            <?php else: ?>
-            <?php foreach ($brands as $brand): ?>
-                <div class="img-fluid bg-light p-4">
-                    <img style="width: 200px; height:200px; gap:30px" src="<?php echo $brand['brand_image']; ?>" alt="<?php echo $brand['brand_name']; ?>">
->>>>>>> e132f0be311c7599297892b795d6d6adbdee9478
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-
-                <?php endforeach; ?>
-                <?php endif; ?>
             </div>
         </div>
-    </div>
-<<<<<<< HEAD
 
 
 
-=======
-</div> -->
->>>>>>> e132f0be311c7599297892b795d6d6adbdee9478
-    <!-- Vendor End -->
 
 
-    <!-- Footer Start -->
-    <?php include("../widgets/footer.php"); ?>
-    <!-- Footer End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top bg-danger "><i class="fa fa-angle-double-up text-dark "></i></a>
+        <?php include("../widgets/footer.php"); ?>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script>
-    $(document).ready(function(){
-        $('.vendor-carousel').owlCarousel({
-            loop: true,
-            margin: 0,
-            nav: false,
-            responsive: {
-                0: { items: 1 },
-                576: { items: 3 },
-                768: { items: 4 },
-                992: { items: 5 },
-                1200: { items: 7 }
-            }
-        });
-    });
-</script>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary back-to-top bg-danger "><i class="fa fa-angle-double-up text-dark "></i></a>
 
 
-    <!-- Template Javascript -->
-    <script src="../js/main.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.vendor-carousel').owlCarousel({
+                    loop: true,
+                    margin: 0,
+                    nav: false,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        576: {
+                            items: 3
+                        },
+                        768: {
+                            items: 4
+                        },
+                        992: {
+                            items: 5
+                        },
+                        1200: {
+                            items: 7
+                        }
+                    }
+                });
+            });
+        </script>
+
+
+        <!-- Template Javascript -->
+        <script src="../js/main.js"></script>
 </body>
 
 </html>

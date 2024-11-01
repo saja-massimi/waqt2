@@ -57,8 +57,8 @@
 
     $total = 0;
     $couponModel = new CouponModel();
-    if (isset($_SESSION['coupon_code']))
-        $coupon_discount = $couponModel->getCouponValue($_SESSION['coupon_code']);
+    // if (isset($_SESSION['coupon_code']))
+    //     $coupon_discount = $couponModel->getCouponValue($_SESSION['coupon_code']);
 
     ?>
 
@@ -194,7 +194,7 @@
 
                                 ?>
                                 <h5>Total</h5>
-                                <h5 name="total"><?= $total + 5 ?> JOD</h5>
+                                <h5 name="total" id="cartTotalItems"><?= $total + 5 ?> JOD</h5>
                             </div>
                         </div>
                 </div>

@@ -18,6 +18,19 @@ document.getElementById('couponForm').addEventListener('submit', function (e) {
                 document.querySelector('h6[name="copoun_value"]').innerHTML = '- ' + data.discount * 100 + ' %';
                 document.querySelector('h5[name="total"]').innerHTML = data.discounted_total + ' JD';
 
+                if (data.discounted_total < 5) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Coupon',
+                        text: 'You can\'t use the coupon because the total is less than 5 JD',
+                        showConfirmButton: true,
+                        confirmButtonText: 'OK',
+                        customClass: { confirmButton: 'btn btn-danger' },
+                        buttonsStyling: false
+                    });
+                    return;
+                }
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Coupon Applied',
@@ -41,7 +54,7 @@ document.getElementById('couponForm').addEventListener('submit', function (e) {
         })
         .catch(error => console.error('Error:', error));
 });
-//*****************************************Handle Order Submit************************************************************ 
+//****************************Handle Order Submit************************************************************ 
 document.addEventListener('DOMContentLoaded', function () {
     const orderForm = document.getElementById('orderForm');
 
@@ -79,19 +92,31 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    //*****************************************Handle Order Submit************************************************************
     orderForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        const cartTotalItems = document.getElementById('cartTotalItems').innerText;
+
+        // Check if there are items in the cart before proceeding
+        if (parseInt(cartTotalItems) < 5) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Empty Cart',
+                text: 'You need to add at least one item to your cart before placing an order.',
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-danger' },
+                buttonsStyling: false
+            });
+            return;
+        }
 
         if (shipToDifferentAddressCheckbox.checked) {
             const altStreet = document.getElementById('altStreet').value;
             const altCity = document.getElementById('altCity').value;
-            hiddenAddressField.value = `${altStreet}, ${altCity}, ${altCountry}`;
+            hiddenAddressField.value = `${altStreet}, ${altCity}`;
         }
-
-
-
-
 
         const formData = new FormData(orderForm);
         formData.append('order', true);
@@ -100,15 +125,8 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             body: formData
         })
-            .then(response => {
-                return response.json();
-            }
-            )
+            .then(response => response.json())
             .then(data => {
-                console.log(data);
-
-
-
                 if (data.status === 'success') {
                     Swal.fire({
                         icon: 'success',
