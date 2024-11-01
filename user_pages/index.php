@@ -5,53 +5,52 @@ include('dbconnection.php');
 $query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price, watch_brand, watch_model, watch_gender FROM watches LIMIT 4";
 
 
-$statment=$dbconnection->prepare($query);
+$statment = $dbconnection->prepare($query);
 $statment->execute();
-$items=$statment->fetchAll(PDO::FETCH_ASSOC);
+$items = $statment->fetchAll(PDO::FETCH_ASSOC);
 //print_r($items);
 
 
 $query = "SELECT * FROM watches WHERE is_deleted = 0 ORDER BY created_at DESC LIMIT 4";
-$statment=$dbconnection->prepare($query);
+$statment = $dbconnection->prepare($query);
 $statment->execute();
-$products=$statment->fetchAll(PDO::FETCH_ASSOC);
+$products = $statment->fetchAll(PDO::FETCH_ASSOC);
 //print_r($products);
 
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['watch_id'])){
-    $user_id= $_SESSION['user'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['watch_id'])) {
+    $user_id = $_SESSION['user'];
     $watch_id = $_POST['watch_id'];
     $action = $_POST['action'];
 
-    
-    
+
+
     if ($action === 'add') {
-    
-        $query="INSERT INTO `wishlist`( `user_id`, `watch_id`) VALUES (:user_id,:watch_id)";
-        $stat=$dbconnection->prepare($query);
-        
-        $data=[
-        'user_id'=> $user_id,
-        'watch_id'=> $watch_id
-        
+
+        $query = "INSERT INTO `wishlist`( `user_id`, `watch_id`) VALUES (:user_id,:watch_id)";
+        $stat = $dbconnection->prepare($query);
+
+        $data = [
+            'user_id' => $user_id,
+            'watch_id' => $watch_id
+
         ];
         $stat->execute($data);
-        $result=$stat->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stat->fetchAll(PDO::FETCH_ASSOC);
         //print_r($result);
-        
-        } else if ($action === 'remove') {
-            $query="DELETE FROM `wishlist` WHERE `user_id`=:user_id AND `watch_id`=:watch_id";
-            $stmt = $dbconnection->prepare($query);
-            $stmt->bindParam(':user_id', $user_id,PDO::PARAM_INT);
-            $stmt->bindParam(':watch_id', $watch_id,PDO::PARAM_INT);
-            $stmt->execute();
-        };
-    
-    }
 
-$query="SELECT `brand_name`, `brand_image` FROM `brandname` LIMIT 5";
-$statement=$dbconnection->prepare($query);
+    } else if ($action === 'remove') {
+        $query = "DELETE FROM `wishlist` WHERE `user_id`=:user_id AND `watch_id`=:watch_id";
+        $stmt = $dbconnection->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':watch_id', $watch_id, PDO::PARAM_INT);
+        $stmt->execute();
+    };
+}
+
+$query = "SELECT `brand_name`, `brand_image` FROM `brandname` LIMIT 5";
+$statement = $dbconnection->prepare($query);
 $statement->execute();
-$brands=$statement->fetchAll(PDO::FETCH_ASSOC);
+$brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -199,70 +198,74 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Products Start -->
-<div class="container-fluid pt-5 pb-3">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
-    <div class="row px-xl-5">
-        <?php if (count($items) == 0): ?>
-            <p class="text-center w-100">No featured products available.</p>
-        <?php else: ?>
-            <?php foreach ($items as $item): ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                    <div class="product-item bg-light mb-4">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+        <div class="row px-xl-5">
+            <?php if (count($items) == 0): ?>
+                <p class="text-center w-100">No featured products available.</p>
+            <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
 
-                                <?php                                           
+                                    <?php
                                     // User ID from session
-                                    $user_id = $_SESSION['user'];
+                                    if (isset($_SESSION['user'])) {
+                                        $user_id = $_SESSION['user'];
 
-                                    // Product ID you are checking for, assuming $product['watch_id'] is the current product ID
-                                    $watch_id = $item['watch_id'];
+                                        // Product ID you are checking for, assuming $product['watch_id'] is the current product ID
+                                        $watch_id = $item['watch_id'];
 
-                                    // Query to check if this item is already in the wishlist
-                                    $query = "SELECT * FROM wishlist WHERE user_id =:user_id AND watch_id =:watch_id";
-                                    $stmt = $dbconnection->prepare($query);
-                                    $stmt->bindParam(':user_id', $user_id,PDO::PARAM_INT);
-                                    $stmt->bindParam(':watch_id', $watch_id,PDO::PARAM_INT);
-                                    $stmt->execute();
-                                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                                    //print_r($result);
+                                        // Query to check if this item is already in the wishlist
+                                        $query = "SELECT * FROM wishlist WHERE user_id =:user_id AND watch_id =:watch_id";
+                                        $stmt = $dbconnection->prepare($query);
+                                        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                                        $stmt->bindParam(':watch_id', $watch_id, PDO::PARAM_INT);
+                                        $stmt->execute();
+                                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                                        //print_r($result);
 
-                                    // Check if the item is in the wishlist
-                                    $isFavorite = $result !== false;
+                                        // Check if the item is in the wishlist
+                                        $isFavorite = $result !== false;
+                                    } else {
+                                        $isFavorite = false;
+                                    }
                                     ?>
 
-                                            <form action="index.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                                <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                                <input type="hidden" name="action" value="<?= $isFavorite ? 'remove' : 'add' ?>">
-                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                                    <i class="<?= $isFavorite ? 'fas fa-heart' : 'far fa-heart' ?>"></i>
-                                                </button>
-                                            </form>
+                                    <form action="index.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
+                                        <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
+                                        <input type="hidden" name="action" value="<?= $isFavorite ? 'remove' : 'add' ?>">
+                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
+                                            <i class="<?= $isFavorite ? 'fas fa-heart' : 'far fa-heart' ?>"></i>
+                                        </button>
+                                    </form>
 
-                                            <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                                <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                            </form>
-                               
+                                    <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
+                                        <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
+                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="#"><?php echo $item['watch_name']; ?></a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$<?php echo $item['watch_price']; ?></h5>
-                                <h6 class="text-muted ml-2"><del>$132</del></h6>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="#"><?php echo $item['watch_name']; ?></a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>$<?php echo $item['watch_price']; ?></h5>
+                                    <h6 class="text-muted ml-2"><del>$132</del></h6>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </div>
-</div>
     <!-- Products End -->
 
 
@@ -271,36 +274,40 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
         <div class="row px-xl-5">
 
-        <?php if (count($products) == 0): ?>
-            <p class="text-center w-100">No featured products available.</p>
-        <?php else: ?>
-            <?php foreach ($products as $product): ?>
+            <?php if (count($products) == 0): ?>
+                <p class="text-center w-100">No featured products available.</p>
+            <?php else: ?>
+                <?php foreach ($products as $product): ?>
 
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="<?php echo $product['watch_img']; ?>" alt="<?php echo $product['watch_name']; ?>">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="<?php echo $product['watch_img']; ?>" alt="<?php echo $product['watch_name']; ?>">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
 
-                                    <?php                                           
-                                    // User ID from session
-                                    $user_id = $_SESSION['user'];
+                                    <?php
+                                    if (isset($_SESSION['user'])) {
+                                        $user_id = $_SESSION['user'];
 
-                                    // Product ID you are checking for, assuming $product['watch_id'] is the current product ID
-                                    $watch_id = $product['watch_id'];
+                                        // Product ID you are checking for, assuming $product['watch_id'] is the current product ID
+                                        $watch_id = $item['watch_id'];
 
-                                    // Query to check if this item is already in the wishlist
-                                    $query = "SELECT * FROM wishlist WHERE user_id =:user_id AND watch_id =:watch_id";
-                                    $stmt = $dbconnection->prepare($query);
-                                    $stmt->bindParam(':user_id', $user_id,PDO::PARAM_INT);
-                                    $stmt->bindParam(':watch_id', $watch_id,PDO::PARAM_INT);
-                                    $stmt->execute();
-                                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                                    //print_r($result);
+                                        // Query to check if this item is already in the wishlist
+                                        $query = "SELECT * FROM wishlist WHERE user_id =:user_id AND watch_id =:watch_id";
+                                        $stmt = $dbconnection->prepare($query);
+                                        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                                        $stmt->bindParam(':watch_id', $watch_id, PDO::PARAM_INT);
+                                        $stmt->execute();
+                                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                                        //print_r($result);
 
-                                    // Check if the item is in the wishlist
-                                    $isFavorite = $result !== false;
+                                        // Check if the item is in the wishlist
+                                        $isFavorite = $result !== false;
+                                    } else {
+                                        $isFavorite = false;
+                                    }
+
                                     ?>
                                     <form action="index.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
                                         <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
@@ -311,27 +318,28 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
                                     </form>
 
                                     <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                                <input type="hidden" name="watch_id" value="<?= $product['watch_id'] ?>">
-                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
+                                        <input type="hidden" name="watch_id" value="<?= $product['watch_id'] ?>">
+                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
+                                            <i class="fa fa-search"></i>
+                                        </button>
                                     </form>
 
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">"<?php echo $product['watch_name']; ?>"</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>"<?php echo $product['watch_price']; ?>"</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        
-                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">"<?php echo $product['watch_name']; ?>"</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>"<?php echo $product['watch_price']; ?>"</h5>
+                                    <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                </div>
+
+                            </div>
 
 
-                </div>
-            </div>
-        <?php endforeach; ?>
-        <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
         </div>
     </div>
@@ -339,7 +347,7 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Vendor Start -->
-<!-- <div class="container-fluid py-5 ">
+    <!-- <div class="container-fluid py-5 ">
     <div class="row px-xl-5 ">
         <div class="col">
             <div class="row owl-carousel vendor-carousel d-flex justify-content-center">

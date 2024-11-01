@@ -49,7 +49,9 @@ class cartModel extends Dbh
           $product_query = "SELECT * FROM watches WHERE watch_id = ? AND is_deleted = 0";
           $product_stmt = $pdo->prepare($product_query);
           $product_stmt->execute([$watch_id]);
+          
           return $product_stmt->fetch();
+
      }
 
      public function removeProductFromCart($cartID, $product_id)

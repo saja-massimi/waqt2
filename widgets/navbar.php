@@ -6,14 +6,17 @@ require_once '../user_pages/models/Dbh.php';
 require_once '../user_pages/models/cartModel.php';
 
 include('dbconnection.php');
-$user_id = $_SESSION['user'];
 
-$query="SELECT COUNT(*) AS total_number FROM `wishlist` WHERE `user_id`=:user_id";
-$statment=$dbconnection->prepare($query);
-$statment->bindParam(':user_id',$user_id,PDO::PARAM_INT);
-$statment->execute();
-$result=$statment->fetch(PDO::FETCH_ASSOC);
-//print_r($result);
+if (isset($_SESSION['user'])) {
+  $user_id = $_SESSION['user'];
+
+  $query = "SELECT COUNT(*) AS total_number FROM `wishlist` WHERE `user_id`=:user_id";
+  $statment = $dbconnection->prepare($query);
+  $statment->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+  $statment->execute();
+}
+
+
 
 
 $cartModel = new cartModel();
@@ -132,7 +135,7 @@ if (isset($_SESSION['user'])) {
             <div class="navbar-nav ml-auto d-flex align-items-center">
               <a href="<?= isset($_SESSION['user']) ? '../user_pages/wishlist.php' : '../auth/index.html' ?>" class="btn">
                 <i class="fas fa-heart text-dark"></i>
-                <span class="badge bg-secondary rounded-circle"><?= $result['total_number'] ?></span>
+                <span class="badge bg-secondary rounded-circle"><?= $result['total_number'] ?? 0 ?></span>
               </a>
 
               <a href="<?= isset($_SESSION['user']) ? 'cart.php' : '../auth/index.html' ?>" class="btn mx-2">

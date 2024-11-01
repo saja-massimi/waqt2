@@ -1,5 +1,5 @@
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-light mt-5 pt-5">
+<div class="footer container-fluid bg-dark text-light mt-5 pt-5">
     <div class="row px-xl-5 pt-5">
         <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
             <h5 class="text-light text-uppercase mb-4">Get In Touch</h5>
