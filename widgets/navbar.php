@@ -4,7 +4,7 @@
 session_start();
 require_once '../user_pages/models/Dbh.php';
 require_once '../user_pages/models/cartModel.php';
-
+include('../widgets/head.php');
 include('dbconnection.php');
 $user_id = $_SESSION['user'];
 
@@ -102,44 +102,37 @@ if (isset($_SESSION['user'])) {
   <div class="container-fluid bg-white text-dark mb-30">
     <div class="row px-xl-5 text-dark">
       <div class="col-lg-12">
-        <nav class="navbar navbar-expand-lg navbar-dark py-3 py-lg-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 py-lg-0">
           <a class="navbar-brand" href="../user_pages/index.php">
             <img src="../img/logo1.png" width="50" height="50" class="d-inline" alt="logo">
             WAQT
           </a>
 
           <!-- Toggler Button for Mobile Menu -->
-          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <!-- Navbar Collapse -->
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mr-auto"></div>
-
-            <!-- Centered Links -->
             <div class="navbar-nav mx-auto">
-              <a href="../user_pages/index.php" class="nav-item nav-link active">Home</a>
-              <a href="../user_pages/products.php" class="nav-item nav-link">Products</a>
-              <div class="nav-item dropdown">
-                <a href="../user_pages/index.php#categories" class="nav-item nav-link">Categories</a>
-              </div>
-              <a href="contact_us.php" class="nav-item nav-link">Contact</a>
-              <a href="aboutus.php" class="nav-item nav-link">About Us</a>
+              <a href="../user_pages/index.php" class="nav-item nav-link active text-dark">Home</a>
+              <a href="../user_pages/products.php" class="nav-item nav-link text-dark">Products</a>
+              <a href="../user_pages/index.php#categories" class="nav-item nav-link text-dark">Categories</a>
+              <a href="contact_us.php" class="nav-item nav-link text-dark">Contact</a>
+              <a href="aboutus.php" class="nav-item nav-link text-dark">About Us</a>
             </div>
 
             <!-- Right-side Icons -->
-            <div class="navbar-nav ml-auto d-flex align-items-center">
+            <div class="navbar-nav ms-auto d-flex align-items-center">
               <a href="<?= isset($_SESSION['user']) ? '../user_pages/wishlist.php' : '../auth/index.html' ?>" class="btn">
                 <i class="fas fa-heart text-dark"></i>
                 <span class="badge bg-secondary rounded-circle"><?= $result['total_number'] ?></span>
               </a>
-
               <a href="<?= isset($_SESSION['user']) ? 'cart.php' : '../auth/index.html' ?>" class="btn mx-2">
                 <i class="fas fa-shopping-cart text-dark"></i>
                 <span class="badge bg-secondary rounded-circle"><?= isset($_SESSION['user']) ? $cartTotal['count'] : 0 ?></span>
               </a>
-
               <?= isset($_SESSION['user']) ?
                 '<a href="../user_pages/customer_profile.php" class="btn">
                   <i class="fas fa-user text-dark"></i>
@@ -147,7 +140,7 @@ if (isset($_SESSION['user'])) {
                 <a href="../user_pages/logout.php" class="btn">
                   <i class="fas fa-sign-out-alt text-dark"></i>
                 </a>' :
-                '<a href="../auth/index.html" class="nav-item nav-link">Sign In | Log In</a>'
+                '<a href="../auth/index.html" class="nav-item nav-link">Sign In | Log In</a>' 
               ?>
             </div>
           </div>
@@ -156,3 +149,27 @@ if (isset($_SESSION['user'])) {
     </div>
   </div>
   <!-- Navbar End -->
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      function toggleNavbarMethod() {
+        if ($(window).width() > 992) {
+          $('.navbar .dropdown').on('mouseover', function () {
+            $(this).find('.dropdown-toggle').dropdown('show');
+          }).on('mouseout', function () {
+            $(this).find('.dropdown-toggle').dropdown('hide');
+          });
+        } else {
+          $('.navbar .dropdown').off('mouseover').off('mouseout');
+        }
+      }
+      toggleNavbarMethod();
+      $(window).resize(toggleNavbarMethod);
+    });
+  </script>
+</body>
+</html>

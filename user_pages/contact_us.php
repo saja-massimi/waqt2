@@ -107,7 +107,7 @@ if(isset($_GET['message'])){
 
 <section class="content container">
     <h2>Contact Waqt Team</h2>
-    <form action="controllers/contactController.php" method="post">
+    <form action="controllers/contactController.php" method="post"  id="contactForm">
         <div class="row mb-3">
             <div class="col-md-6 mb-3 mb-md-0 field ">
                 <input type="text" required placeholder="Full Name" id="name" class="form-control item" name="name">
@@ -175,7 +175,59 @@ if(isset($_GET['message'])){
 src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 ></script>
 
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function (event) {
+        event.preventDefault();
 
+        const contactData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            phone_number: document.getElementById("phone_number").value,
+            subject: document.getElementById("subject").value,
+            message: document.getElementById("message").value
+        };
+
+        // Send email
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: "dina nafez",
+            Password: "D122E06D8037D94978B5634475CFBB3F2D42", // Use a secure method in production
+            To: 'nafez.dina@gmail.com',
+            From: contactData.email,
+            Subject: contactData.subject,
+            Body: `
+                <p><strong>Full Name:</strong> ${contactData.name}</p>
+                <p><strong>Email:</strong> ${contactData.email}</p>
+                <p><strong>Phone Number:</strong> ${contactData.phone_number}</p>
+                <p><strong>Subject:</strong> ${contactData.subject}</p>
+                <p><strong>Message:</strong> ${contactData.message}</p>
+            `
+        }).then(response => {
+            console.log("Email sent successfully:", response);
+
+            // Submit data to the PHP endpoint for database insertion
+            fetch("insert_contact.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(contactData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Message sent and data saved successfully!");
+                } else {
+                    alert("Error saving data.");
+                }
+            })
+            .catch(error => console.error("Error inserting data:", error));
+
+        }).catch(error => {
+            alert("Failed to send email.");
+            console.error("Email error:", error);
+        });
+    });
+</script>
 
 </body>
 </html>
