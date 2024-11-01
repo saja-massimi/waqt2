@@ -1,5 +1,5 @@
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-light mt-5 pt-5">
+<div class="footer container-fluid bg-dark text-light mt-5 pt-5">
     <div class="row px-xl-5 pt-5">
         <!-- Get In Touch Section -->
         <div class="col-md-6 mb-5">

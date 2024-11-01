@@ -54,6 +54,16 @@ class productsModel extends Dbh
 
         return $result ? $result : 0;
     }
+
+    public function getProductById($id)
+    {
+        $sql = "SELECT * FROM watches WHERE watch_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result : [];
+    }
     
 
     

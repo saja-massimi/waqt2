@@ -1,23 +1,53 @@
-<?
-class CouponModel extends Dbh {
-    public function __construct() {
-        parent::__construct();
-    }
-    public function getCoupon() {
+<?php
+class CouponModel extends Dbh
+{
+    // Get all coupons from the database
+    public function getCoupon()
+    {
         $sql = "SELECT * FROM coupon";
         $stmt = $this->connect()->query($sql);
-        while ($row = $stmt->fetch()) {
-            $data[] = $row;
+        $data = []; // Initialize the array to hold coupon data
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row; // Fetching data as associative array
         }
+
         return $data;
     }
 
-    //check if coupon is valid
-    public function checkCoupon($coupon) {
-        $sql = "SELECT * FROM coupon WHERE coupon_code = ?";
+    public function checkCoupon($coupon)
+    {
+        $sql = "SELECT * FROM coupons WHERE coupon_name = ? AND 
+                NOW() BETWEEN start_date AND end_date AND 
+                usage_limit > 0";
+
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$coupon]);
-        $data = $stmt->fetch();
-        return $data;
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $data !== false;
+    }
+    
+    public function getCouponValue($coupon)
+    {
+        $sql = "SELECT coupon_value FROM coupons WHERE coupon_name = ? AND 
+                NOW() BETWEEN start_date AND end_date AND 
+                usage_limit > 0";
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$coupon]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $data['coupon_value'];
+    }
+
+    public function updateCouponUsage($coupon)
+    {
+        $sql = "UPDATE coupons SET usage_limit = usage_limit - 1 WHERE coupon_name = ?";
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$coupon]);
     }
 }
