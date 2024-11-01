@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['watch_id'])) {
     };
 }
 
-$query = "SELECT `brand_name`, `brand_image` FROM `brandname` LIMIT 5";
-$statement = $dbconnection->prepare($query);
+$query="SELECT `brand_name`, `brand_image` FROM `brandname` LIMIT 5";
+$statement=$dbconnection->prepare($query);
 $statement->execute();
 $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -198,19 +198,19 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
-        <div class="row px-xl-5">
-            <?php if (count($items) == 0): ?>
-                <p class="text-center w-100">No featured products available.</p>
-            <?php else: ?>
-                <?php foreach ($items as $item): ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <div class="product-item bg-light mb-4">
-                            <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
-                                <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
+<div class="container-fluid pt-5 pb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">Featured Products</span></h2>
+    <div class="row px-xl-5">
+        <?php if (count($items) == 0): ?>
+            <p class="text-center w-100">No featured products available.</p>
+        <?php else: ?>
+            <?php foreach ($items as $item): ?>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
+                            <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
 
                                     <?php
                                     // User ID from session
@@ -244,28 +244,28 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
                                         </button>
                                     </form>
 
-                                    <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                        <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </form>
-
-                                </div>
+                                            <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
+                                                <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
+                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </form>
+                               
                             </div>
-                            <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href="#"><?php echo $item['watch_name']; ?></a>
-                                <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>$<?php echo $item['watch_price']; ?></h5>
-                                    <h6 class="text-muted ml-2"><del>$132</del></h6>
-                                </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate" href="#"><?php echo $item['watch_name']; ?></a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>$<?php echo $item['watch_price']; ?></h5>
+                                <h6 class="text-muted ml-2"><del>$132</del></h6>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
+</div>
     <!-- Products End -->
 
 
@@ -318,10 +318,10 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
                                     </form>
 
                                     <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                        <input type="hidden" name="watch_id" value="<?= $product['watch_id'] ?>">
-                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                            <i class="fa fa-search"></i>
-                                        </button>
+                                                <input type="hidden" name="watch_id" value="<?= $product['watch_id'] ?>">
+                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
                                     </form>
 
                                 </div>
@@ -347,8 +347,8 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Vendor Start -->
-
-    <!-- <div class="container-fluid py-5 ">
+     
+<!-- <div class="container-fluid py-5 ">
     <div class="row px-xl-5 ">
         <div class="col">
             <div class="row owl-carousel vendor-carousel d-flex justify-content-center">
@@ -363,13 +363,34 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                 <?php endforeach; ?>
                 <?php endif; ?>
+                    <!-- <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-2.jpg" alt="Vendor 2">
+                    </div>
+                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-3.jpg" alt="Vendor 3">
+                    </div>
+                    <div class=" colbg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-4.jpg" alt="Vendor 4">
+                    </div>
+                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-5.jpg" alt="Vendor 5">
+                    </div>
+                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-6.jpg" alt="Vendor 6">
+                    </div> -->
+                    
+                </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
 
 
- 
+=======
+</div> -->
+>>>>>>> e132f0be311c7599297892b795d6d6adbdee9478
+    <!-- Vendor End -->
 
 
         <?php include("../widgets/footer.php"); ?>

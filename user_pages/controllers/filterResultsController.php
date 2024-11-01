@@ -90,7 +90,13 @@
                             <i class="fa fa-shopping-cart"></i>
                         </a>
                         <a class="btn btn-outline-dark btn-square" href="./wishlist.php?<?= $watch['watch_id'] ?>"><i class="far fa-heart"></i></a>
-                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+
+                        <form action="detail.php" method="POST">
+                            <input type="hidden" name="watch_id" value="<?php echo htmlspecialchars($watch['watch_id']); ?>">
+                            <button type="submit" class="btn btn-outline-dark btn-square add-to-cart">
+                            <i class="fa fa-search"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="<?php echo $view == 1 ? 'col-lg-6' : ''; ?> text-center py-4">
