@@ -23,6 +23,8 @@ function add_cart(product_id) {
 
                     icon: "success"
                 });
+
+
             } else {
                 alert(data.message);
             }

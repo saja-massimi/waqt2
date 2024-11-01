@@ -8,19 +8,22 @@ class orderModel extends Dbh
         $user_id,
         $order_total,
         $order_status,
-        $order_address
+        $order_address,
+        $additional_address
     ) {
-        $sql = "INSERT INTO orders (user_id, order_total, order_status,order_address) VALUES (?, ?, ?,?)";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$user_id, $order_total, $order_status, $order_address]);
+        $sql = "INSERT INTO `orders`( `user_id`, `order_total`, `order_status`, `order_address`, `extra_directions`) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$user_id, $order_total, $order_status, $order_address, $additional_address]);
+
+            return $this->connect()->lastInsertId();
+        } catch (PDOException $e) {
+            error_log("Failed to create order: " . $e->getMessage());
+            return false;
+        }
     }
 
-    public function addOrderItem($order_id, $product_id, $quantity)
-    {
-        $sql = "INSERT INTO orders (user_id, product_id, quantity) VALUES (?, ?, ?)";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$order_id, $product_id, $quantity]);
-    }
 
     public function getLastOrderId()
     {
@@ -54,10 +57,43 @@ class orderModel extends Dbh
         JOIN 
             watches w ON ci.watch_id = w.watch_id
         WHERE 
-            c.user_id = :user_id";
+            c.user_id = :user_id
+          AND
+            ci.is_deleted = 0";
+
 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([':user_id' => $user_id]);
         return $stmt->fetchAll();
+    }
+
+
+    function getOrderTotal($user_id)
+    {
+        $sql = "SELECT SUM(w.watch_price * ci.quantity) AS total_price
+        FROM 
+            carts c
+        JOIN 
+            cart_items ci ON c.cart_id = ci.cart_id
+        JOIN 
+            watches w ON ci.watch_id = w.watch_id
+        WHERE 
+            c.user_id = :user_id
+        AND    
+        ci.is_deleted = 0
+            ";
+
+
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([':user_id' => $user_id]);
+        return $stmt->fetch()['total_price'];
+    }
+
+    public function addOrderItems($order_id, $watch_id, $quantity, $watch_price)
+    {
+
+        $sql = 'INSERT INTO `order_items`( `order_id`, `watch_id`, `quantity`, `price`) VALUES (?,?,?,?)';
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$order_id, $watch_id, $quantity, $watch_price]);
     }
 }

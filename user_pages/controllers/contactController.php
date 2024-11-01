@@ -1,13 +1,16 @@
 <?php
-require "../models/contactModel.php";
-require_once "../models/Dbh.php";
+require '../models/contactModel.php';
+require_once '../models/Dbh.php';
 
-if (isset($_POST['submit_contact'])) {
-    $contact_name = $_POST['name'];
-    $contact_email = $_POST['email'];
-    $contact_phone = $_POST['phone_number'];
-    $contact_subject = $_POST['subject'];
-    $contact_message = $_POST['message'];
+// Get JSON input
+$inputData = json_decode(file_get_contents("php://input"), true);
+
+if ($inputData) {
+    $contact_name = $inputData['name'];
+    $contact_email = $inputData['email'];
+    $contact_phone = $inputData['phone_number'];
+    $contact_subject = $inputData['subject'];
+    $contact_message = $inputData['message'];
 
     $dbconn = new Dbh();
     $conn = $dbconn->connect();
@@ -25,12 +28,14 @@ if (isset($_POST['submit_contact'])) {
         $result = $contactModel->insertContactInfo($data);
 
         if ($result === "Data inserted successfully!") {
-            header("Location: ../contact_us.php?status=success");
-        } 
-        
-    else {
-        header("Location: ../contact_us.php?status=connection_failed");
+            echo json_encode(["success" => true]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Failed to insert data."]);
+        }
+    } else {
+        echo json_encode(["success" => false, "message" => "Database connection failed."]);
     }
-    exit();
-    }}
+} else {
+    echo json_encode(["success" => false, "message" => "Invalid input."]);
+}
 ?>

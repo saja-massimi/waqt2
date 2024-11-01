@@ -47,4 +47,15 @@ class productsController extends productsModel
             return "No products found.";
         }
     }
+
+    public function productByID($id)
+    {
+        $results = $this->getProductById($id);
+
+        if (!empty($results)) {
+            return $results;
+        } else {
+            return "No product found.";
+        }
+    }
 }
