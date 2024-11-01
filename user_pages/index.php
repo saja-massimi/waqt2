@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['watch_id'])){
     
     }
 
-$query="SELECT `brand_name`, `brand_image` FROM `brandname` LIMIT 5";
+$query="SELECT `brand_name`, `brand_image` FROM `brandname`";
 $statement=$dbconnection->prepare($query);
 $statement->execute();
 $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
@@ -200,7 +200,7 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Products Start -->
 <div class="container-fluid pt-5 pb-3">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">Featured Products</span></h2>
     <div class="row px-xl-5">
         <?php if (count($items) == 0): ?>
             <p class="text-center w-100">No featured products available.</p>
@@ -241,10 +241,10 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
                                                 </button>
                                             </form>
 
-                                            <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                                <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                                    <i class="fa fa-search"></i>
+                                            <form action="detail.php" method="POST">
+                                                <input type="hidden" name="watch_id" value="<?php echo htmlspecialchars($item['watch_id']); ?>">
+                                                <button type="submit" class="btn btn-outline-dark btn-square add-to-cart">
+                                                <i class="fa fa-search"></i>
                                                 </button>
                                             </form>
                                
@@ -268,7 +268,7 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="pr-3">Recent Products</span></h2>
         <div class="row px-xl-5">
 
         <?php if (count($products) == 0): ?>
@@ -310,11 +310,11 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
                                         </button>
                                     </form>
 
-                                    <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                                <input type="hidden" name="watch_id" value="<?= $product['watch_id'] ?>">
-                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
+                                    <form action="detail.php" method="POST">
+                                        <input type="hidden" name="watch_id" value="<?php echo htmlspecialchars($item['watch_id']); ?>">
+                                        <button type="submit" class="btn btn-outline-dark btn-square add-to-cart">
+                                        <i class="fa fa-search"></i>
+                                        </button>
                                     </form>
 
                         </div>
@@ -339,25 +339,41 @@ $brands=$statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Vendor Start -->
-<!-- <div class="container-fluid py-5 ">
-    <div class="row px-xl-5 ">
-        <div class="col">
-            <div class="row owl-carousel vendor-carousel d-flex justify-content-center">
-
-            <?php if (count($brands) == 0): ?>
-            <p class="text-center w-100">No featured products available.</p>
-            <?php else: ?>
-            <?php foreach ($brands as $brand): ?>
-                <div class="img-fluid bg-light p-4">
-                    <img style="width: 200px; height:200px; gap:30px" src="<?php echo $brand['brand_image']; ?>" alt="<?php echo $brand['brand_name']; ?>">
-                </div>
+    <div class="container-fluid  d-flex justify-content-between">
+        <div class="row px-xl-5 d-flex justify-content-between">
+            <div class=" d-flex justify-content-between">
+                <div class="row owl-carousel vendor-carousel" style=" margin:0; padding:0;">
+                <?php if (count($brands) == 0): ?>
+                    <p class="text-center w-100">No featured products available.</p>
+                <?php else: ?>
+                <?php foreach ($brands as $brand): ?>
+                    <div class="cpl bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="<?php echo $brand['brand_image']; ?>" alt="<?php echo $brand['brand_name']; ?>">
+                    </div>
 
                 <?php endforeach; ?>
                 <?php endif; ?>
+                    <!-- <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-2.jpg" alt="Vendor 2">
+                    </div>
+                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-3.jpg" alt="Vendor 3">
+                    </div>
+                    <div class=" colbg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-4.jpg" alt="Vendor 4">
+                    </div>
+                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-5.jpg" alt="Vendor 5">
+                    </div>
+                    <div class=" col bg-light p-4 d-flex justify-content-between w-auto">
+                        <img src="../img/vendor-6.jpg" alt="Vendor 6">
+                    </div> -->
+                    
+                </div>
             </div>
         </div>
     </div>
-</div> -->
+
     <!-- Vendor End -->
 
 

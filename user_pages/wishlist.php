@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist_id'])){
 }
 
 $user_id= $_SESSION['user'];
-$query="SELECT `wishlist`.WishlistItemID,`watches`.watch_name, `watches`.watch_description, `watches`.watch_img, `watches`.watch_price, `watches`.total_number FROM `wishlist` 
+$query="SELECT `wishlist`.WishlistItemID,`watches`.watch_name, `watches`.watch_description, `watches`.watch_img, `watches`.watch_price, `watches`.quantity FROM `wishlist` 
 JOIN `users` ON `wishlist`.user_id = `users`.user_id 
 JOIN `watches` ON `wishlist`.watch_id = `watches`.watch_id
 WHERE `users`.user_id=:user_id";
