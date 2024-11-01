@@ -198,19 +198,19 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Products Start -->
-<div class="container-fluid pt-5 pb-3">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
-    <div class="row px-xl-5">
-        <?php if (count($items) == 0): ?>
-            <p class="text-center w-100">No featured products available.</p>
-        <?php else: ?>
-            <?php foreach ($items as $item): ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                    <div class="product-item bg-light mb-4">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+        <div class="row px-xl-5">
+            <?php if (count($items) == 0): ?>
+                <p class="text-center w-100">No featured products available.</p>
+            <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
 
                                     <?php
                                     // User ID from session
@@ -347,8 +347,8 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Vendor Start -->
-     
-<!-- <div class="container-fluid py-5 ">
+
+    <!-- <div class="container-fluid py-5 ">
     <div class="row px-xl-5 ">
         <div class="col">
             <div class="row owl-carousel vendor-carousel d-flex justify-content-center">
@@ -359,7 +359,6 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
             <?php foreach ($brands as $brand): ?>
                 <div class="img-fluid bg-light p-4">
                     <img style="width: 200px; height:200px; gap:30px" src="<?php echo $brand['brand_image']; ?>" alt="<?php echo $brand['brand_name']; ?>">
->>>>>>> e132f0be311c7599297892b795d6d6adbdee9478
                 </div>
 
                 <?php endforeach; ?>
@@ -367,21 +366,17 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 
 
 
-=======
-</div> -->
->>>>>>> e132f0be311c7599297892b795d6d6adbdee9478
-    <!-- Vendor End -->
+ 
 
 
         <?php include("../widgets/footer.php"); ?>
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-primary back-to-top bg-danger "><i class="fa fa-angle-double-up text-dark "></i></a>
+    <a href="#" class="btn btn-primary back-to-top bg-danger "><i class="fa fa-angle-double-up text-dark "></i></a>
 
 
     <!-- JavaScript Libraries -->
@@ -390,25 +385,35 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script>
-    $(document).ready(function(){
-        $('.vendor-carousel').owlCarousel({
-            loop: true,
-            margin: 0,
-            nav: false,
-            responsive: {
-                0: { items: 1 },
-                576: { items: 3 },
-                768: { items: 4 },
-                992: { items: 5 },
-                1200: { items: 7 }
-            }
+        $(document).ready(function() {
+            $('.vendor-carousel').owlCarousel({
+                loop: true,
+                margin: 0,
+                nav: false,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    576: {
+                        items: 3
+                    },
+                    768: {
+                        items: 4
+                    },
+                    992: {
+                        items: 5
+                    },
+                    1200: {
+                        items: 7
+                    }
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
-        <!-- Template Javascript -->
-        <script src="../js/main.js"></script>
+    <!-- Template Javascript -->
+    <script src="../js/main.js"></script>
 </body>
 
 </html>

@@ -83,7 +83,7 @@
         <div class="col-lg-<?php echo $view == 1 ? '6' : '4'; ?> col-md-6 col-sm-6 pb-1">
             <div class="<?php echo $view == 1 ? 'row' : ''; ?> product-item bg-light mb-4">
                 <div class="<?php echo $view == 1 ? 'col-lg-6' : ''; ?> product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-80" src="../<?= htmlspecialchars($watch['watch_img']); ?>" alt="<?php echo htmlspecialchars($watch['watch_name']); ?>">
+                    <img class="img-fluid w-80" src="<?= htmlspecialchars($watch['watch_img']); ?>" alt="<?php echo htmlspecialchars($watch['watch_name']); ?>">
                     <div class="product-action">
 
                         <a onclick="add_cart(<?= htmlspecialchars($watch['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($watch['watch_id']) ?>">
