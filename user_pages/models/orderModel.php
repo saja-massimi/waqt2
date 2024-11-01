@@ -96,4 +96,12 @@ class orderModel extends Dbh
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$order_id, $watch_id, $quantity, $watch_price]);
     }
+
+    public function getOrderDetails($user_id)
+    {
+        $sql = "SELECT * FROM orders WHERE user_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll();
+    }
 }
