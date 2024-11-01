@@ -1,6 +1,5 @@
 <?php  
 include("../widgets/navbar.php");
-include("dbconnection.php"); // Include database connection
 ?>
 
 <!DOCTYPE html>
@@ -110,18 +109,18 @@ if(isset($_GET['message'])){
     <h2>Contact Waqt Team</h2>
     <form action="controllers/contactController.php" method="post">
         <div class="row mb-3">
-            <div class="col-md-6 mb-3 mb-md-0">
+            <div class="col-md-6 mb-3 mb-md-0 field ">
                 <input type="text" required placeholder="Full Name" id="name" class="form-control item" name="name">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 field ">
                 <input type="email" required placeholder="Email Address" id="email" name="email" class="form-control item">
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-6 mb-3 mb-md-0">
+            <div class="col-md-6 mb-3 mb-md-0 field ">
                 <input type="text" maxlength="10" required placeholder="Phone Number" id="phone"  name="phone_number" class="form-control item">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 field ">
                 <input type="text" required placeholder="Subject" id="subject" name="subject" class="form-control item">
             </div>
         </div>
