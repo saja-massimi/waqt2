@@ -3,23 +3,15 @@ include("../widgets/navbar.php");
 include("../widgets/head.php");
 include('dbconnection.php');
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    if (isset($_POST['watch_id'])) {
-        $_SESSION['watch_id'] = $_POST['watch_id'];
-        echo "Watch ID: " . $_SESSION['watch_id'];
-    } else {
-        echo "watch_id not set.";
-    }
+if (isset($_POST['watch_id'])) {
+    $_SESSION['watch_id'] = $_POST['watch_id'];
+    $id = $_SESSION['watch_id'];
+    echo $id;
 }
-
-
-
 $query = "SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
 
-$statement=$dbconnection->prepare($query);
-$statement->bindParam(':id',$id,PDO::PARAM_INT);
+$statement = $dbconnection->prepare($query);
+$statement->bindParam(':id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statement->execute();
 $watches = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -30,7 +22,6 @@ $query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price
 $statment = $dbconnection->prepare($query);
 $statment->execute();
 $items = $statment->fetchAll(PDO::FETCH_ASSOC);
-//print_r($items);
 
 if (isset($_POST['review'])) {
     $id = $_SESSION['watch_id'];
@@ -90,9 +81,9 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
         color: #ccc;
     }
 
-.star.active {
-  color: #FFD700; /* Gold color */
-}
+    .star.active {
+        color: #FFD700;
+    }
 
     .star.filled {
         color: #FFD700;
@@ -127,6 +118,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
 
                         echo '<div class="rating-stars">';
                         for ($i = 1; $i <= 5; $i++) {
+
                             $class = ($i <= $rating) ? 'filled' : '';
                             echo '<span class="star ' . $class . '" data-rating="' . $i . '">★</span>';
                         }
@@ -144,15 +136,17 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                     <p class="mb-4" style="font-size: 24px;"><b>Material: </b><?= $watches['strap_material'] ?></p>
 
                     <div class="d-flex align-items-center mb-4 pt-2">
-
                         <div class="d-flex align-items-center mb-4 pt-2">
+
                             <div class="input-group quantity mr-3" style="width: 130px;">
                                 <div class="input-group-btn">
                                     <button class="btn btn-primary bg-danger text-white btn-minus">
                                         <i class="fa fa-minus"></i>
                                     </button>
+
+
                                 </div>
-                                <input type="text" class="form-control border-0 text-center" value="1" id="quantity-input">
+                                <input type="text" class="form-control  border-0 text-center" value="1" id="quantity-input">
                                 <div class="input-group-btn">
                                     <button class="btn btn-primary bg-danger text-white btn-plus">
                                         <i class="fa fa-plus"></i>
@@ -160,17 +154,12 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary align-items-center bg-danger text-white px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                            <button class="btn btn-primary  bg-danger text-white px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
                                 Cart</button>
-
-
                         </div>
 
 
                     </div>
-
-
-
 
                 </div>
             </div>
@@ -192,7 +181,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                         <div class="tab-pane fade" id="tab-pane-3">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 class="mb-4"><?= $count['total_number'] ?> review for "<?= $watches['watch_name'] ?>"</h4>
+                                    <h4 class="mb-4"><?= $count['total_number'] ?> review/s for <?= $watches['watch_name'] ?></h4>
                                     <?php if (count($data) == 0): ?>
                                         <p class="text-center w-100">No featured products available.</p>
                                     <?php else: ?>
@@ -204,9 +193,9 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                                     <h6><?= $name['user_name'] ?> <small> - <i><?= $all['created_at'] ?></i></small></h6>
                                                     <?php
                                                     $rating =  $all['rating'];
+
                                                     echo '<div class="rating-stars">';
                                                     for ($i = 1; $i <= 5; $i++) {
-
                                                         $class = ($i <= $rating) ? 'filled' : '';
                                                         echo '<span class="star ' . $class . '" data-rating="' . $i . '">★</span>';
                                                     }
@@ -220,7 +209,6 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Leave a review</h4>
-                                    <small style="font-size: 20px;">Your email address will not be published. Required fields are marked *</small>
                                     <small style="font-size: 20px;">Your email address will not be published. Required fields are marked *</small>
                                     <div class="d-flex my-3">
 
@@ -245,7 +233,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                         <input type="email" class="form-control" id="email" name="email">
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3 bg-danger">
+                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3">
                                     </div>
                                     </form>
 
@@ -262,7 +250,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
 
     <!-- Products Start -->
     <div class="container-fluid py-5">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="pr-3">You May Also Like</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">You May Also Like</span></h2>
         <div class="row px-xl-5">
             <?php if (count($items) == 0): ?>
                 <p class="text-center w-100">No featured products available.</p>
@@ -290,8 +278,8 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none text-truncate" href=""><?php echo $item['watch_name']; ?></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5> <?php echo $item['watch_price']; ?></h5>
-                                    <h6 class="text-muted ml-2"><del>123.00</del> JOD</h6>
+                                    <h5><?php echo $item['watch_price']; ?></h5>
+                                    <h6 class="text-muted ml-2"><del>$123.00</del></h6>
                                 </div>
                             </div>
                         </div>
@@ -333,7 +321,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                 const rating = star.getAttribute('data-rating');
                 ratingInput.value = rating;
 
-
+                // Set active class for clicked star and all previous ones
                 stars.forEach(s => {
                     s.classList.remove('active');
                     if (s.getAttribute('data-rating') <= rating) {
@@ -345,7 +333,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const maxQuantity = <?php echo $watches['quantity']; ?>;
+            const maxQuantity = <?php echo $watches['quantity']; ?>; // Value from PHP
             const quantityInput = document.getElementById('quantity-input');
             const btnPlus = document.querySelector('.btn-plus');
             const btnMinus = document.querySelector('.btn-minus');
