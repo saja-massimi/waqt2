@@ -23,9 +23,13 @@ $statment = $dbconnection->prepare($query);
 $statment->execute();
 $items = $statment->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST['review'])) {
-    $id = $_SESSION['watch_id'];
+$isLoggedIn = isset($_SESSION['user']);
 
+if (isset($_POST['review'])) {
+
+    if ($isLoggedIn) {
+
+    $id = $_SESSION['watch_id'];
     $rating = $_POST['rating'];
     $comment = $_POST['comment'];
     $email = $_POST['email'];
@@ -71,13 +75,6 @@ $statt = $dbconnection->prepare($query);
 $statt->bindParam(':watch_id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statt->execute();
 $avg = $statt->fetch(PDO::FETCH_ASSOC);
-
-$user_id = $_SESSION['user'];
-$query = "SELECT `user_name`FROM `users` WHERE `user_id`=:id";
-$statement = $dbconnection->prepare($query);
-$statement->bindParam(':id', $_SESSION['user'], PDO::PARAM_INT);
-$statement->execute();
-$name = $statement->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -283,10 +280,6 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                         <label for="message" style="font-size: 20px;">Your Review *</label>
                                         <textarea id="message" cols="30" rows="5" class="form-control" name="comment"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="email" style="font-size: 20px;">Your Email *</label>
-                                        <input type="email" class="form-control" id="email" name="email">
-                                    </div>
                                     <div class="form-group mb-0">
                                         <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3">
                                     </div>
@@ -420,6 +413,19 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
             });
         });
     </script>
+
+<?php if ($updateMessage == "error"): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'You must login first',
+                text: 'Please try again.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+<?php endif; ?>
+
 </body>
 
 </html>
