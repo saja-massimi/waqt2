@@ -28,6 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     switch ($action) {
+        case 'set':
+            if ($cartModel->addProductWithQuantity($cartID, $product_id, $quantity)) {
+                echo json_encode(['status' => 'success', 'message' => 'Quantity set']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to set quantity']);
+            }
+            break;
         case 'increase':
             if ($cartModel->getWatchQuantity($product_id) <= $quantity) {
                 exit;

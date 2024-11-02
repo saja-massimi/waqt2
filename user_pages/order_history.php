@@ -28,7 +28,7 @@
 
 
                     if ($orders->rowCount() == 0) {
-                        echo ("empty table");
+                        echo "<tr><td colspan='5'>No orders found Yet</td></tr>";
                     } else {
                         foreach ($orders as $order) {
                             echo "  <tr>

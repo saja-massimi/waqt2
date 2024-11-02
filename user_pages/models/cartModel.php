@@ -37,6 +37,29 @@ class cartModel extends Dbh
           }
      }
 
+     public function addProductWithQuantity($cartID, $product_id, $quantity)
+     {
+          $pdo = $this->connect();
+
+          $check_query = "SELECT * FROM cart_items WHERE cart_id = ? AND watch_id = ? AND is_deleted = 0";
+          $check_stmt = $pdo->prepare($check_query);
+          $check_stmt->execute([$cartID, $product_id]);
+          $existingProduct = $check_stmt->fetch();
+
+          if ($existingProduct) {
+               if ($this->getWatchQuantity($product_id) <= $existingProduct['quantity']) {
+                    return false;
+               }
+               $update_query = "UPDATE cart_items SET quantity = quantity + ? WHERE cart_id = ?  AND watch_id = ?";
+               $update_stmt = $pdo->prepare($update_query);
+               return $update_stmt->execute([$quantity, $cartID, $product_id]);
+          } else {
+               $cart_query = "INSERT INTO cart_items (cart_id, watch_id, quantity) VALUES (?, ?, ?)";
+               $cart_stmt = $pdo->prepare($cart_query);
+               return $cart_stmt->execute([$cartID, $product_id, $quantity]);
+          }
+     }
+
      public function getAllProductsInCart($cartID)
      {
           $pdo = $this->connect();

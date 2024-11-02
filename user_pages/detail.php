@@ -6,15 +6,14 @@ include('dbconnection.php');
 if (isset($_POST['watch_id'])) {
     $_SESSION['watch_id'] = $_POST['watch_id'];
     $id = $_SESSION['watch_id'];
-    echo $id;
 }
+
 $query = "SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
 
 $statement = $dbconnection->prepare($query);
 $statement->bindParam(':id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statement->execute();
 $watches = $statement->fetch(PDO::FETCH_ASSOC);
-
 
 $query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price, watch_brand, watch_model, watch_gender FROM watches ORDER BY RAND() LIMIT 4";
 
@@ -24,6 +23,7 @@ $statment->execute();
 $items = $statment->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST['review'])) {
+
     $id = $_SESSION['watch_id'];
 
     $rating = $_POST['rating'];
@@ -65,12 +65,14 @@ $statt->bindParam(':watch_id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statt->execute();
 $avg = $statt->fetch(PDO::FETCH_ASSOC);
 
-$user_id = $_SESSION['user'];
-$query = "SELECT `user_name`FROM `users` WHERE `user_id`=:id";
-$statement = $dbconnection->prepare($query);
-$statement->bindParam(':id', $_SESSION['user'], PDO::PARAM_INT);
-$statement->execute();
-$name = $statement->fetch(PDO::FETCH_ASSOC);
+// $user_id = $_SESSION['user'];
+// $query = "SELECT `user_name`FROM `users` WHERE `user_id`=:id";
+// $statement = $dbconnection->prepare($query);
+// $statement->bindParam(':id', $_SESSION['user'], PDO::PARAM_INT);
+// $statement->execute();
+// $name = $statement->fetch(PDO::FETCH_ASSOC);
+
+
 
 ?>
 
@@ -143,10 +145,9 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                     <button class="btn btn-primary bg-danger text-white btn-minus">
                                         <i class="fa fa-minus"></i>
                                     </button>
-
-
                                 </div>
-                                <input type="text" class="form-control  border-0 text-center" value="1" id="quantity-input">
+
+                                <input type="text" class="form-control border-0 text-center" value="1" id="quantity-input">
                                 <div class="input-group-btn">
                                     <button class="btn btn-primary bg-danger text-white btn-plus">
                                         <i class="fa fa-plus"></i>
@@ -154,8 +155,10 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary  bg-danger text-white px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                                Cart</button>
+                            <a onclick="add_cartWithQuantity(<?= htmlspecialchars($_SESSION['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($_SESSION['watch_id']) ?>">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+
                         </div>
 
 
@@ -233,7 +236,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                         <input type="email" class="form-control" id="email" name="email">
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3">
+                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3 bg-danger">
                                     </div>
                                     </form>
 
@@ -261,25 +264,29 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 h-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_name']; ?>">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <a onclick="add_cart(<?= htmlspecialchars($item['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($item['watch_id']) ?>">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </a>
 
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" onclick="addWishlist(<?= htmlspecialchars($item['watch_id']) ?>);" data-id="<?= htmlspecialchars($item['watch_id']) ?>"><i class="far fa-heart"></i></a>
 
 
-                                    <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
+                                    <form action="detail.php" method="POST" style="display:inline;position:relative">
+                                        <a href="" class="btn btn-outline-dark btn-square"> <i class="fa fa-search"></i>
+                                        </a>
                                         <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                            <i class="fa fa-search"></i>
+                                        <button type="submit" style="border:none; background:none;display:hidden;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;">
                                         </button>
                                     </form>
+
 
                                 </div>
                             </div>
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none text-truncate" href=""><?php echo $item['watch_name']; ?></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5><?php echo $item['watch_price']; ?></h5>
-                                    <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                    <h5><?php echo $item['watch_price']; ?> JOD</h5>
+                                    <h6 class="text-muted ml-2"><del>123.00</del> JOD</h6>
                                 </div>
                             </div>
                         </div>
@@ -302,15 +309,16 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 
     <script>
         const stars = document.querySelectorAll('.star');
@@ -321,7 +329,6 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                 const rating = star.getAttribute('data-rating');
                 ratingInput.value = rating;
 
-                // Set active class for clicked star and all previous ones
                 stars.forEach(s => {
                     s.classList.remove('active');
                     if (s.getAttribute('data-rating') <= rating) {
@@ -333,7 +340,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const maxQuantity = <?php echo $watches['quantity']; ?>; // Value from PHP
+            const maxQuantity = <?php echo $watches['quantity']; ?>;
             const quantityInput = document.getElementById('quantity-input');
             const btnPlus = document.querySelector('.btn-plus');
             const btnMinus = document.querySelector('.btn-minus');
@@ -342,6 +349,8 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                 let currentValue = parseInt(quantityInput.value);
                 if (currentValue < maxQuantity) {
                     quantityInput.value = currentValue + 1;
+                } else {
+                    quantityInput.value = maxQuantity;
                 }
             });
 
@@ -353,6 +362,8 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
             });
         });
     </script>
+    <script src="./addToCart.js"> </script>
+
 </body>
 
 </html>
