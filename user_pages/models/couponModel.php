@@ -6,10 +6,10 @@ class CouponModel extends Dbh
     {
         $sql = "SELECT * FROM coupon";
         $stmt = $this->connect()->query($sql);
-        $data = []; // Initialize the array to hold coupon data
+        $data = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $data[] = $row; // Fetching data as associative array
+            $data[] = $row;
         }
 
         return $data;
@@ -28,7 +28,7 @@ class CouponModel extends Dbh
 
         return $data !== false;
     }
-    
+
     public function getCouponValue($coupon)
     {
         $sql = "SELECT coupon_value FROM coupons WHERE coupon_name = ? AND 

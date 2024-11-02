@@ -7,11 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Profile</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link href="../css/style.css" rel="stylesheet">
@@ -37,7 +34,6 @@
             font-family: Arial, sans-serif;
         }
 
-        @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:200,300,400,500,600,700|Roboto:100,300,400,500,700&display=swap");
 
         body {
             background-color: var(--BgColor2);
@@ -440,6 +436,28 @@
 
 
     <?php require_once("../widgets/footer.php"); ?>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize DataTables for the Order History table
+        const orderHistoryTable = document.querySelector('#history table');
+
+        if (orderHistoryTable) {
+            new DataTable(orderHistoryTable, {
+                // Optional DataTables settings
+                autoWidth: false,
+                paging: true,
+                searching: true,
+                order: [[1, 'desc']], // Order by Date, descending
+                columnDefs: [{
+                    targets: "_all",
+                    defaultContent: "-"
+                }]
+            });
+        }
+    });
+</script>
+
     <script>
         function openTab(tabName) {
             const tabs = document.querySelectorAll(".tab-content");
@@ -449,14 +467,29 @@
             const tabLinks = document.querySelectorAll(".nav-tabs a");
             tabLinks.forEach(link => link.classList.remove("active"));
             document.querySelector(`[data-tab="${tabName}"]`).classList.add("active");
+
+            // Re-initialize DataTables when Order History tab is selected
+            if (tabName === 'history') {
+                $(document).ready(function() {
+                    $('#history table').DataTable();
+                });
+            }
         }
 
         window.onload = function() {
             openTab("profile");
         };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/jquery.dataTables.min.css">
+<!-- jQuery (required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 

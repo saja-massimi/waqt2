@@ -9,12 +9,12 @@ $cartModel = new cartModel();
 if (!isset($_SESSION['user'])) {
     echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
     exit;
-}
-
-$cartID = $cartModel->getCartId($_SESSION['user']);
-if (!$cartID) {
-    echo json_encode(['status' => 'error', 'message' => 'Unable to retrieve or create a cart']);
-    exit;
+} else {
+    $cartID = $cartModel->getCartId($_SESSION['user']);
+    if (!$cartID) {
+        echo json_encode(['status' => 'error', 'message' => 'Unable to retrieve or create a cart']);
+        exit;
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

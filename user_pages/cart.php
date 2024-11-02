@@ -10,6 +10,8 @@
     require_once '../user_pages/models/cartModel.php';
 
     $cartModel = new cartModel();
+
+
     $cartID = $cartModel->getCartId($_SESSION['user']);
     $products = $cartModel->getAllProductsInCart($cartID);
 

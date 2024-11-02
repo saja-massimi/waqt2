@@ -15,16 +15,17 @@ if (isset($_SESSION['user'])) {
   $statment->bindParam(':user_id', $user_id, PDO::PARAM_INT);
   $statment->execute();
   $result = $statment->fetch(PDO::FETCH_ASSOC);
-}
+  $cartModel = new cartModel();
 
-
-
-
-$cartModel = new cartModel();
-if (isset($_SESSION['user'])) {
   $cartID = $cartModel->getCartId($_SESSION['user']);
   $cartTotal = $cartModel->getCartItemsCount($cartID);
 }
+
+
+
+
+
+
 
 ?>
 
@@ -144,7 +145,7 @@ if (isset($_SESSION['user'])) {
                 <a href="../user_pages/logout.php" class="btn">
                   <i class="fas fa-sign-out-alt text-dark"></i>
                 </a>' :
-                '<a href="../auth/index.html" class="nav-item nav-link">Sign In | Log In</a>' 
+                '<a href="../auth/index.html" class="nav-item nav-link">Sign In | Log In</a>'
               ?>
             </div>
           </div>
@@ -159,12 +160,12 @@ if (isset($_SESSION['user'])) {
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       function toggleNavbarMethod() {
         if ($(window).width() > 992) {
-          $('.navbar .dropdown').on('mouseover', function () {
+          $('.navbar .dropdown').on('mouseover', function() {
             $(this).find('.dropdown-toggle').dropdown('show');
-          }).on('mouseout', function () {
+          }).on('mouseout', function() {
             $(this).find('.dropdown-toggle').dropdown('hide');
           });
         } else {
@@ -176,4 +177,5 @@ if (isset($_SESSION['user'])) {
     });
   </script>
 </body>
+
 </html>

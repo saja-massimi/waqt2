@@ -169,13 +169,15 @@ sup {
   top: -.5em;
 }
 
-a {
+a,
+button {
   color: var(--primary);
   text-decoration: none;
   background-color: transparent;
 }
 
-a:hover {
+a:hover,
+button:hover {
   color: var(--primary);
   text-decoration: underline;
 }

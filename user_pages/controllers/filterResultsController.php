@@ -89,10 +89,12 @@
 
                         <a class="btn btn-outline-dark btn-square" onclick="addWishlist(<?= htmlspecialchars($watch['watch_id']) ?>);" data-id="<?= htmlspecialchars($watch['watch_id']) ?>"><i class="far fa-heart"></i></a>
 
-                        <form action="detail.php" method="POST">
-                            <input type="hidden" name="watch_id" value="<?php echo htmlspecialchars($watch['watch_id']); ?>">
-                            <button type="submit" class="btn btn-outline-dark btn-square add-to-cart">
-                                <i class="fa fa-search"></i>
+
+                        <form action="detail.php" method="POST" style="display:inline;position:relative">
+                            <a href="" class="btn btn-outline-dark btn-square"> <i class="fa fa-search"></i>
+                            </a>
+                            <input type="hidden" name="watch_id" value="<?= $watch['watch_id'] ?>">
+                            <button type="submit" style="border:none; background:none;display:hidden;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;">
                             </button>
                         </form>
 

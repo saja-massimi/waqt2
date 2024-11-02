@@ -23,7 +23,10 @@ function add_cart(product_id) {
 
 
             } else {
-                alert(data.message);
+                Swal.fire({
+                    title: "You need To Login First",
+                    icon: "error"
+                });
             }
         })
         .catch(error => console.error('Error adding product to cart:', error));
@@ -44,7 +47,7 @@ function addWishlist(product_id) {
     })
         .then(response => response.json())
         .then(data => {
-            
+
             if (data.status === 'success') {
                 Swal.fire({
                     title: "Product added to wishlist successfully!",
@@ -63,5 +66,3 @@ function addWishlist(product_id) {
 
         });
 }
-
-
