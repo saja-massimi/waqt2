@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("../widgets/navbar.php");
 include("../widgets/head.php");
 include('dbconnection.php');
@@ -10,8 +10,8 @@ if (isset($_POST['watch_id'])) {
 }
 $query = "SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
 
-$statement=$dbconnection->prepare($query);
-$statement->bindParam(':id',$_SESSION['watch_id'],PDO::PARAM_INT);
+$statement = $dbconnection->prepare($query);
+$statement->bindParam(':id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statement->execute();
 $watches = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -19,7 +19,7 @@ $watches = $statement->fetch(PDO::FETCH_ASSOC);
 $query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price, watch_brand, watch_model, watch_gender FROM watches ORDER BY RAND() LIMIT 4";
 
 
-$statment=$dbconnection->prepare($query);
+$statment = $dbconnection->prepare($query);
 $statment->execute();
 $items = $statment->fetchAll(PDO::FETCH_ASSOC);
 
@@ -30,32 +30,31 @@ if (isset($_POST['review'])) {
     $comment = $_POST['comment'];
     $email = $_POST['email'];
 
-    $query="INSERT INTO `reviews` (`user_email`, `watch_id`, `rating`, `review_text`)
+    $query = "INSERT INTO `reviews` (`user_email`, `watch_id`, `rating`, `review_text`)
           SELECT `user_email`, :watch_id, :rating, :review_text 
           FROM `users` WHERE `user_id` = :user_id";
-    $stat=$dbconnection->prepare($query);
-            
-            $data=[
-            //'user_email'=> $email,
-            'watch_id'=> $id,
-            'rating'=> $rating,
-            'review_text'=> $comment,
-            'user_id'=> $user_id,
+    $stat = $dbconnection->prepare($query);
 
-            ];
-    
-            try {
-                $stat->execute($data);
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            }
+    $data = [
+        //'user_email'=> $email,
+        'watch_id' => $id,
+        'rating' => $rating,
+        'review_text' => $comment,
+        'user_id' => $user_id,
 
+    ];
 
-    }else { $updateMessage = "error";
+    try {
+        $stat->execute($data);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
+} else {
+    $updateMessage = "error";
 }
 
-$query="SELECT `user_email`,`rating`,`review_text`,`created_at` FROM `reviews` WHERE `watch_id`=:watch_id";
+
+$query = "SELECT `user_email`,`rating`,`review_text`,`created_at` FROM `reviews` WHERE `watch_id`=:watch_id";
 $statement = $dbconnection->prepare($query);
 $statement->bindParam(':watch_id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statement->execute();
@@ -65,13 +64,13 @@ $query = "SELECT COUNT(*) AS total_number FROM `reviews` WHERE `watch_id`=:watch
 $statt = $dbconnection->prepare($query);
 $statt->bindParam(':watch_id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statt->execute();
-$count=$statt->fetch(PDO::FETCH_ASSOC);
+$count = $statt->fetch(PDO::FETCH_ASSOC);
 
 $query = "SELECT avg(rating) AS avg_number FROM `reviews` WHERE `watch_id`=:watch_id";
 $statt = $dbconnection->prepare($query);
 $statt->bindParam(':watch_id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statt->execute();
-$avg=$statt->fetch(PDO::FETCH_ASSOC);
+$avg = $statt->fetch(PDO::FETCH_ASSOC);
 
 $user_id = $_SESSION['user'];
 $query = "SELECT `user_name`FROM `users` WHERE `user_id`=:id";
@@ -84,50 +83,60 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
 <style>
-    
-.star {
-  font-size: 30px;
-  cursor: pointer;
-  color: #ccc;
+    .star {
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccc;
 
-}
-.star2 {
-  font-size: 30px;
-  cursor: pointer;
-  color: #ccc;
-  pointer-events: none; /* Disable click events */
+    }
 
-
-}
-.star2.active {
-  color: #FFD700; /* Gold color */
-}
-
-.star2.filled {
-    color: #FFD700;  /* Color for filled stars (e.g., gold) */
-}
-.star.active {
-  color: #FFD700; /* Gold color */
-}
-
-.star.filled {
-    color: #FFD700;  /* Color for filled stars (e.g., gold) */
-}
-.review-section {
-    max-height: 300px; /* Set your desired max height */
-    overflow-y: auto;  /* Enable vertical scrolling */
-    padding-right: 15px; /* Optional: Add padding to avoid content cutoff by scrollbar */
-}
-.rating-stars {
-    display: inline-block;
-}
+    .star2 {
+        font-size: 30px;
+        cursor: pointer;
+        color: #ccc;
+        pointer-events: none;
+        /* Disable click events */
 
 
+    }
+
+    .star2.active {
+        color: #FFD700;
+        /* Gold color */
+    }
+
+    .star2.filled {
+        color: #FFD700;
+        /* Color for filled stars (e.g., gold) */
+    }
+
+    .star.active {
+        color: #FFD700;
+        /* Gold color */
+    }
+
+    .star.filled {
+        color: #FFD700;
+        /* Color for filled stars (e.g., gold) */
+    }
+
+    .review-section {
+        max-height: 300px;
+        /* Set your desired max height */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        padding-right: 15px;
+        /* Optional: Add padding to avoid content cutoff by scrollbar */
+    }
+
+    .rating-stars {
+        display: inline-block;
+    }
 </style>
 
 <body>
-    
-    
+
+
 
 
     <!-- Shop Detail Start -->
@@ -136,19 +145,19 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
             <div class="col-lg-5 mb-30">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner bg-light">
-                            <?php echo "
+                        <?php echo "
                             <img class='m-auto' src='{$watches['watch_img']}' alt='{$watches['watch_name']}' style='max-width: 100%; height: auto;'>
                             "; ?>
-                        
+
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
-                    <h3 style="font-size: 30px;"><?= $watches['watch_name']?></h3>
+                    <h3 style="font-size: 30px;"><?= $watches['watch_name'] ?></h3>
                     <div class="d-flex mb-3">
-                    <?php
+                        <?php
                         $rating =  $avg['avg_number']; // Replace with your actual database query to get the rating
 
                         echo '<div class="rating-stars">';
@@ -160,12 +169,12 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                         echo '</div>';
                         ?>
 
-                    <small class="pt-2 pl-2" style="font-size: 20px;">(<?= $count['total_number']?> Reviews)</small>
+                        <small class="pt-2 pl-2" style="font-size: 20px;">(<?= $count['total_number'] ?> Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4" style="font-size: 30px;"><?= $watches['watch_price']?> JOD</h3>
+                    <h3 class="font-weight-semi-bold mb-4" style="font-size: 30px;"><?= $watches['watch_price'] ?> JOD</h3>
                     <p class="mb-4" style="font-size: 24px;"><b>Description: </b><?= $watches['watch_description'] ?>
-                        </p>
-                        <p class="mb-4" style="font-size: 24px;"><b>Brand:</b> <?= $watches['watch_brand'] ?></p>
+                    </p>
+                    <p class="mb-4" style="font-size: 24px;"><b>Brand:</b> <?= $watches['watch_brand'] ?></p>
                     <p class="mb-4" style="font-size: 24px;"><b>Model:</b> <?= $watches['watch_model'] ?></p>
                     <p class="mb-4" style="font-size: 24px;"><b>Gender:</b> <?= $watches['watch_gender'] ?></p>
                     <p class="mb-4" style="font-size: 24px;"><b>Material: </b><?= $watches['strap_material'] ?></p>
@@ -195,7 +204,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
 
 
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -204,71 +213,71 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                 <div class="bg-light p-30">
                     <div class="nav nav-tabs mb-4">
                         <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (<?= $count['total_number']?>)</a>
+                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (<?= $count['total_number'] ?>)</a>
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-pane-1">
                             <h4 class="mb-3">Product Description</h4>
                             <p style="font-size: 24px;"><?= $watches['watch_description'] ?></p>
-                            
+
                         </div>
-                        
+
                         <div class="tab-pane fade" id="tab-pane-3">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 class="mb-4"><?= $count['total_number']?> review for <?= $watches['watch_name']?></h4>
+                                    <h4 class="mb-4"><?= $count['total_number'] ?> review for <?= $watches['watch_name'] ?></h4>
                                     <div class="review-section">
-                                    <?php if (count($data) == 0): ?>
+                                        <?php if (count($data) == 0): ?>
                                             <p class="text-center w-100">No comments available.</p>
-                                            <?php else: ?>
+                                        <?php else: ?>
                                             <?php foreach ($data as $all): ?>
-                                    <div class="media mb-4 ">
-                                        <img src="uploads/download.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                        <div class="media-body">
-                                        
-                                        <?php
-                                        // Example email from database
-                                        $email = $all['user_email'];
+                                                <div class="media mb-4 ">
+                                                    <img src="uploads/download.png" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                                    <div class="media-body">
 
-                                        // Masking the email: show the first 3 characters, then 4 asterisks, and keep the domain part
-                                        $maskedEmail = preg_replace('/(?<=.{3}).(?=.*@)/', '*', $email);
-                                        ?>
+                                                        <?php
+                                                        // Example email from database
+                                                        $email = $all['user_email'];
 
-                                            <h6><?= $maskedEmail ?> <small> - <i><?= $all['created_at']?></i></small></h6>
-                                            <?php
-                                                $rating =  $all['rating']; // Replace with your actual database query to get the rating
+                                                        // Masking the email: show the first 3 characters, then 4 asterisks, and keep the domain part
+                                                        $maskedEmail = preg_replace('/(?<=.{3}).(?=.*@)/', '*', $email);
+                                                        ?>
 
-                                                echo '<div class="rating-stars">';
-                                                for ($i = 1; $i <= 5; $i++) {
-                                                    // Add a class if the star rating is less than or equal to the actual rating
-                                                    $class = ($i <= $rating) ? 'filled' : '';
-                                                    echo '<span class="star2 ' . $class . '" data-rating="' . $i . '">★</span>';
-                                                }
-                                                echo '</div>';
-                                                ?>
-                                            <p><?= $all['review_text']?></p>
-                                            </div>
+                                                        <h6><?= $maskedEmail ?> <small> - <i><?= $all['created_at'] ?></i></small></h6>
+                                                        <?php
+                                                        $rating =  $all['rating']; // Replace with your actual database query to get the rating
+
+                                                        echo '<div class="rating-stars">';
+                                                        for ($i = 1; $i <= 5; $i++) {
+                                                            // Add a class if the star rating is less than or equal to the actual rating
+                                                            $class = ($i <= $rating) ? 'filled' : '';
+                                                            echo '<span class="star2 ' . $class . '" data-rating="' . $i . '">★</span>';
+                                                        }
+                                                        echo '</div>';
+                                                        ?>
+                                                        <p><?= $all['review_text'] ?></p>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </div>
-                                    <?php endforeach; ?>
-                                    <?php endif; ?>
-                                            </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Leave a review</h4>
                                     <small style="font-size: 20px;">Your email address will not be published. Required fields are marked *</small>
                                     <div class="d-flex my-3">
 
-                                    <form action="detail.php" method="POST" >
+                                        <form action="detail.php" method="POST">
 
-                                    <small class="pt-2" style="font-size: 20px;">Your Rating *  </small>
-                                    <div class="star-rating">
-                                            <span class="star" data-rating="1">★</span>
-                                            <span class="star" data-rating="2">★</span>
-                                            <span class="star" data-rating="3">★</span>
-                                            <span class="star" data-rating="4">★</span>
-                                            <span class="star" data-rating="5">★</span>
-                                            <input type="hidden" name="rating" id="rating" value="0">
-                                        </div>
+                                            <small class="pt-2" style="font-size: 20px;">Your Rating * </small>
+                                            <div class="star-rating">
+                                                <span class="star" data-rating="1">★</span>
+                                                <span class="star" data-rating="2">★</span>
+                                                <span class="star" data-rating="3">★</span>
+                                                <span class="star" data-rating="4">★</span>
+                                                <span class="star" data-rating="5">★</span>
+                                                <input type="hidden" name="rating" id="rating" value="0">
+                                            </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="message" style="font-size: 20px;">Your Review *</label>
@@ -337,7 +346,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
     <!-- Products End -->
 
 
-    <?php  include("../widgets/footer.php");?>
+    <?php include("../widgets/footer.php"); ?>
     <!-- Footer End -->
 
 
@@ -360,24 +369,24 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
     <!-- Template Javascript -->
     <script src="../js/main.js"></script>
 
-<script>
-const stars = document.querySelectorAll('.star');
-const ratingInput = document.getElementById('rating');
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
 
-// Set default rating to 5
-const defaultRating = 5;
-ratingInput.value = defaultRating;
+        // Set default rating to 5
+        const defaultRating = 5;
+        ratingInput.value = defaultRating;
 
-// Apply 'active' class to stars for the default rating
-stars.forEach(star => {
-    if (star.getAttribute('data-rating') <= defaultRating) {
-        star.classList.add('active');
-    }
-    
-    // Add click event listener to update rating based on user click
-    star.addEventListener('click', () => {
-        const rating = star.getAttribute('data-rating');
-        ratingInput.value = rating;
+        // Apply 'active' class to stars for the default rating
+        stars.forEach(star => {
+            if (star.getAttribute('data-rating') <= defaultRating) {
+                star.classList.add('active');
+            }
+
+            // Add click event listener to update rating based on user click
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-rating');
+                ratingInput.value = rating;
 
                 // Set active class for clicked star and all previous ones
                 stars.forEach(s => {

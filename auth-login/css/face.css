@@ -1,0 +1,20 @@
+
+
+.face-3d {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1em;
+    border-radius: 50%;
+    pointer-events: none;
+    overflow: hidden;
+    box-sizing: border-box;  
+  
+}
+
+
+	label {
+		margin: 0 0 12px; display: block;
+		font-size: 1.25em; color: #217093; font-weight: 700; font-family: inherit;
+	}
+		
