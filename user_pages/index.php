@@ -15,7 +15,7 @@ $statment->execute();
 $products = $statment->fetchAll(PDO::FETCH_ASSOC);
 
 // get brands
-$query = "SELECT `brand_name`, `brand_image` FROM `brandname` LIMIT 5";
+$query = "SELECT `brand_name`, `brand_image` FROM `brandname`";
 $statement = $dbconnection->prepare($query);
 $statement->execute();
 $brands = $statement->fetchAll(PDO::FETCH_ASSOC);

@@ -23,7 +23,7 @@ $statment->execute();
 $items = $statment->fetchAll(PDO::FETCH_ASSOC);
 
 $isLoggedIn = isset($_SESSION['user']);
-
+$updateMessage = "";
 if (isset($_POST['review'])) {
 
     if ($isLoggedIn) {
@@ -282,7 +282,7 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                                         <textarea id="message" cols="30" rows="5" class="form-control" name="comment"></textarea>
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3">
+                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3 bg-danger">
                                     </div>
                                     </form>
 

@@ -72,7 +72,11 @@
             <?php else: ?>
                 <?php foreach ($brands as $brand): ?>
 
-                    <div class="item"><img src="https://www.w3schools.com/tags/img_girl.jpg" alt="<?php echo htmlspecialchars($brand['brand_image']); ?>" /></div>
+                    <div class="item">
+
+                        <img src="../../Project/dashboards/assets/products_img/<?= htmlspecialchars($brand['brand_image']) ?>" alt="<?php echo htmlspecialchars($brand['brand_image']); ?>" />
+                    </div>
+
                 <?php endforeach; ?>
             <?php endif; ?>
 
