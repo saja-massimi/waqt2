@@ -4,16 +4,23 @@ class productsModel extends Dbh
 {
 
 
-    protected function getAllProducts()
+    protected function getAllProducts($search = '')
     {
         $sql = "SELECT * FROM watches";
+        if (!empty($search)) {
+            $sql .= " WHERE watch_name LIKE :search OR watch_description LIKE :search";
+        }
+
         $stmt = $this->connect()->prepare($sql);
+        if (!empty($search)) {
+            $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+        }
+
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $result ? $result : [];
     }
-
     protected function getBrands()
     {
         $sql = "SELECT DISTINCT watch_brand FROM watches";

@@ -268,6 +268,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Vendor Start -->
+    <?php include("../widgets/carousel.php"); ?>
     <!-- Vendor End -->
 
 

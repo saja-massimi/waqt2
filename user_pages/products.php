@@ -5,17 +5,21 @@
 require_once '../user_pages/models/dbh.php';
 require_once '../user_pages/models/productsModel.php';
 require_once '../user_pages/controllers/productsController.php';
+$searchQuery = $_POST['search'] ?? "";
+
 $products = new productsController();
-$allProducts = $products->showAllProducts();
+$allProducts = $products->showAllProducts($searchQuery);
 $brands = $products->AllBrands();
 $materials = $products->AllMaterials();
 $count = $products->getAllProductsCount();
+
 $cat = $_GET['category'] ?? null;
 
 
 ?>
 
 <?php include("../widgets/head.php"); ?>
+<?php include("../widgets/chatbot-css.php"); ?>
 
 <style>
     .product-item.list-view {
@@ -62,13 +66,21 @@ $cat = $_GET['category'] ?? null;
     <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="./index.php">Home</a>
-                    <span class="breadcrumb-item active">Watches List</span>
+                <nav class="breadcrumb bg-light mb-30 d-flex justify-content-between align-items-center">
+
+                    <div class=" d-flex justify-content-between">
+                        <a class="breadcrumb-item text-dark" href="./index.php">Home</a>
+                        <span class="breadcrumb-item active">Watches List</span>
+                    </div>
+                    <form class="d-flex" action="" method="post">
+                        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-dark" type="submit" name="submit_search">Search</button>
+                    </form>
                 </nav>
             </div>
         </div>
     </div>
+
     <!-- Breadcrumb End -->
 
 
@@ -89,7 +101,6 @@ $cat = $_GET['category'] ?? null;
                     <input type="range" class="form-range" name="priceRange" id="priceRange" min="0" max="1000" value="300" step="10">
                     <input type="hidden" id="count" value=<?= $count ?>>
                 </div>
-
 
                 <!-- Price Filter End -->
 
@@ -169,6 +180,8 @@ $cat = $_GET['category'] ?? null;
                             <div>
                                 <button class="btn btn-sm btn-light" id="show_normal"><i class="fa fa-th-large"></i></button>
                                 <button class="btn btn-sm btn-light ml-2" id="show_line"><i class="fa fa-bars"></i></button>
+                                <?= "Your Search: " . $searchQuery; ?>
+                                <input type="hidden" id="search_result" value="<?= $searchQuery ?>">
                             </div>
 
                             <div class="ml-2">
@@ -210,6 +223,9 @@ $cat = $_GET['category'] ?? null;
     </div>
     <!-- Shop End -->
 
+
+
+    <?php include("../widgets/chatbot.php"); ?>
     <!-- Footer Start -->
     <?php include '../widgets/footer.php'; ?>
     <!-- Footer End -->
@@ -228,7 +244,7 @@ $cat = $_GET['category'] ?? null;
     <script src="../lib/easing/easing.min.js"></script>
     <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="../js/main.js"></script>
-
+    <?php include("./chatbot.php"); ?>
 
 </body>
 

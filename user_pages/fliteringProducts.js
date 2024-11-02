@@ -27,18 +27,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const showNormalButton = document.getElementById("show_normal");
     const showLineButton = document.getElementById("show_line");
 
-    // Toggle Showing based on clicks
     showNormalButton.addEventListener("click", () => {
         Showing = 0;
-        applyFilters(); // Update the filter results with the new view
+        applyFilters();
     });
 
     showLineButton.addEventListener("click", () => {
         Showing = 1;
-        applyFilters(); // Update the filter results with the new view
     });
 
-    // Function to handle "All" checkboxes for each category
     if (allCategoryCheckbox.checked) {
         categoryCheckboxes.forEach((checkbox) => (checkbox.checked = true));
     }
@@ -49,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         materialCheckboxes.forEach((checkbox) => (checkbox.checked = true));
     }
 
-    // Call applyFilters on page load to reflect initial filter state
     applyFilters();
 
     handleAllCheckbox(allCategoryCheckbox, categoryCheckboxes);
@@ -79,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
             categories: selectedCategories.join(","),
             brands: selectedBrands.join(","),
             materials: selectedMaterials.join(","),
-            view: Showing, // Include the Showing parameter in the URL
+            view: Showing,
         }).toString();
 
         fetch("./controllers/filterResultsController.php?" + queryString)

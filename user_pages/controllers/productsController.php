@@ -3,9 +3,9 @@
 
 class productsController extends productsModel
 {
-    public function showAllProducts()
+    public function showAllProducts($search = '')
     {
-        $results = $this->getAllProducts();
+        $results = $this->getAllProducts($search);
 
         if (!empty($results)) {
             return $results;

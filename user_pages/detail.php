@@ -3,20 +3,17 @@ include("../widgets/navbar.php");
 include("../widgets/head.php");
 include('dbconnection.php');
 
-
-
-if( isset($_POST['watch_id'])){
-    $_SESSION['watch_id'] = $_POST['watch_id']; // Store watch_id in session
-    $id= $_SESSION['watch_id'];
+if (isset($_POST['watch_id'])) {
+    $_SESSION['watch_id'] = $_POST['watch_id'];
+    $id = $_SESSION['watch_id'];
     echo $id;
 }
-$query="SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
+$query = "SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
 
 $statement=$dbconnection->prepare($query);
 $statement->bindParam(':id',$_SESSION['watch_id'],PDO::PARAM_INT);
 $statement->execute();
-$watches=$statement->fetch(PDO::FETCH_ASSOC);
-//print_r($watches);
+$watches = $statement->fetch(PDO::FETCH_ASSOC);
 
 
 $query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price, watch_brand, watch_model, watch_gender FROM watches ORDER BY RAND() LIMIT 4";
@@ -24,18 +21,14 @@ $query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price
 
 $statment=$dbconnection->prepare($query);
 $statment->execute();
-$items=$statment->fetchAll(PDO::FETCH_ASSOC);
-//print_r($items);
+$items = $statment->fetchAll(PDO::FETCH_ASSOC);
 
+if (isset($_POST['review'])) {
+    $id = $_SESSION['watch_id'];
 
-$isLoggedIn = isset($_SESSION['user']);
-if(isset($_POST['review'])){
-
-    if ($isLoggedIn) {
-    $id= $_SESSION['watch_id'];
-    $rating=$_POST['rating'];
-    $comment=$_POST['comment'];
-    $user_id = $_SESSION['user'];
+    $rating = $_POST['rating'];
+    $comment = $_POST['comment'];
+    $email = $_POST['email'];
 
     $query="INSERT INTO `reviews` (`user_email`, `watch_id`, `rating`, `review_text`)
           SELECT `user_email`, :watch_id, :rating, :review_text 
@@ -80,12 +73,12 @@ $statt->bindParam(':watch_id', $_SESSION['watch_id'], PDO::PARAM_INT);
 $statt->execute();
 $avg=$statt->fetch(PDO::FETCH_ASSOC);
 
-// $user_id = $_SESSION['user'];
-// $query="SELECT `user_name`FROM `users` WHERE `user_id`=:user_id";
-// $statement=$dbconnection->prepare($query);
-// $statement->bindParam(':user_id',$_SESSION['user'],PDO::PARAM_INT);
-// $statement->execute();
-// $name=$statement->fetch(PDO::FETCH_ASSOC);
+$user_id = $_SESSION['user'];
+$query = "SELECT `user_name`FROM `users` WHERE `user_id`=:id";
+$statement = $dbconnection->prepare($query);
+$statement->bindParam(':id', $_SESSION['user'], PDO::PARAM_INT);
+$statement->execute();
+$name = $statement->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -178,24 +171,29 @@ $avg=$statt->fetch(PDO::FETCH_ASSOC);
                     <p class="mb-4" style="font-size: 24px;"><b>Material: </b><?= $watches['strap_material'] ?></p>
 
                     <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="d-flex align-items-center mb-4 pt-2">
-                        <div class="input-group quantity mr-3" style="width: 130px;">
-                            <div class="input-group-btn">
-                                <button class="btn btn-primary bg-danger text-white btn-minus">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1" id="quantity-input">
-                            <div class="input-group-btn">
-                                <button class="btn btn-primary bg-danger text-white btn-plus">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                       </div>
+                        <div class="d-flex align-items-center mb-4 pt-2">
 
-                        <button class="btn btn-primary  bg-danger text-white px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                            Cart</button>
+                            <div class="input-group quantity mr-3" style="width: 130px;">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary bg-danger text-white btn-minus">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+
+
+                                </div>
+                                <input type="text" class="form-control  border-0 text-center" value="1" id="quantity-input">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary bg-danger text-white btn-plus">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary  bg-danger text-white px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                                Cart</button>
+                        </div>
+
+
                     </div>
                    
                 </div>
@@ -272,14 +270,17 @@ $avg=$statt->fetch(PDO::FETCH_ASSOC);
                                             <input type="hidden" name="rating" id="rating" value="0">
                                         </div>
                                     </div>
-                                        <div class="form-group">
-                                            <label for="message" style="font-size: 20px;">Your Review *</label>
-                                            <textarea id="message" cols="30" rows="5" class="form-control" name="comment" required></textarea>
-                                        </div>
-                                        
-                                        <div class="form-group mb-0">
-                                            <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="message" style="font-size: 20px;">Your Review *</label>
+                                        <textarea id="message" cols="30" rows="5" class="form-control" name="comment"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" style="font-size: 20px;">Your Email *</label>
+                                        <input type="email" class="form-control" id="email" name="email">
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <input type="submit" value="Leave Your Review" name="review" class="btn btn-primary px-3">
+                                    </div>
                                     </form>
 
                                 </div>
@@ -295,43 +296,44 @@ $avg=$statt->fetch(PDO::FETCH_ASSOC);
 
     <!-- Products Start -->
     <div class="container-fluid py-5">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May Also Like</span></h2>
-    <div class="row px-xl-5">
-        <?php if (count($items) == 0): ?>
-            <p class="text-center w-100">No featured products available.</p>
-        <?php else: ?>
-            <?php foreach ($items as $item): ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                    <div class="product-item bg-light mb-4">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100 h-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_name']; ?>">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">You May Also Like</span></h2>
+        <div class="row px-xl-5">
+            <?php if (count($items) == 0): ?>
+                <p class="text-center w-100">No featured products available.</p>
+            <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100 h-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_name']; ?>">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
 
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
 
 
-                                <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
-                                                <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                                <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                </form>
+                                    <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
+                                        <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
+                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </form>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href=""><?php echo $item['watch_name']; ?></a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5><?php echo $item['watch_price']; ?></h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href=""><?php echo $item['watch_name']; ?></a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5><?php echo $item['watch_price']; ?></h5>
+                                    <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </div>
-</div>
     <!-- Products End -->
 
 
@@ -347,15 +349,16 @@ $avg=$statt->fetch(PDO::FETCH_ASSOC);
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 
 <script>
 const stars = document.querySelectorAll('.star');
@@ -376,51 +379,38 @@ stars.forEach(star => {
         const rating = star.getAttribute('data-rating');
         ratingInput.value = rating;
 
-        // Update active class for clicked star and all previous ones
-        stars.forEach(s => {
-            s.classList.remove('active');
-            if (s.getAttribute('data-rating') <= rating) {
-                s.classList.add('active');
-            }
-        });
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const maxQuantity = <?php echo $watches['quantity']; ?>; // Value from PHP
-    const quantityInput = document.getElementById('quantity-input');
-    const btnPlus = document.querySelector('.btn-plus');
-    const btnMinus = document.querySelector('.btn-minus');
-
-    btnPlus.addEventListener('click', function () {
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue < maxQuantity) {
-            quantityInput.value = currentValue + 1;
-        }
-    });
-
-    btnMinus.addEventListener('click', function () {
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
-        }
-    });
-});
-</script>
-
-<?php if ($updateMessage == "error"): ?>
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'you must login first',
-                text: 'Please try again.',
-                timer: 2000,
-                showConfirmButton: false
+                // Set active class for clicked star and all previous ones
+                stars.forEach(s => {
+                    s.classList.remove('active');
+                    if (s.getAttribute('data-rating') <= rating) {
+                        s.classList.add('active');
+                    }
+                });
             });
-        </script>
-<?php endif; ?>
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const maxQuantity = <?php echo $watches['quantity']; ?>; // Value from PHP
+            const quantityInput = document.getElementById('quantity-input');
+            const btnPlus = document.querySelector('.btn-plus');
+            const btnMinus = document.querySelector('.btn-minus');
 
+            btnPlus.addEventListener('click', function() {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue < maxQuantity) {
+                    quantityInput.value = currentValue + 1;
+                }
+            });
+
+            btnMinus.addEventListener('click', function() {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

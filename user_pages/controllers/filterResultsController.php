@@ -41,7 +41,12 @@
         $query .= " AND strap_material IN (" . implode(', ', array_fill(0, count($materials), '?')) . ")";
         $params = array_merge($params, $materials);
     }
+    $search = isset($_GET['search_result']) ? $_GET['search_result'] : "";
 
+    if (!empty($search)) {
+        $searchParam = '%' . $search . '%';
+        $query .= " AND watch_name LIKE '$searchParam' ";
+    }
     $sortType = isset($_GET['sort']) ? $_GET['sort'] : '';
     switch ($sortType) {
         case 'latest':
@@ -65,9 +70,8 @@
 
     $totalItems = $totalWatches;
     $totalPages = ceil($totalItems / $itemsPerPage);
+    
     $stmt = $connection->prepare($query);
-
-
 
     $stmt->execute($params);
     $watches = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -97,6 +101,7 @@
                             <button type="submit" style="border:none; background:none;display:hidden;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;">
                             </button>
                         </form>
+
 
 
                     </div>
