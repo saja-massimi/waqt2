@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $query = "SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
 
-$statement = $dbconnection->prepare($query);
-$statement->bindParam(':id', $_SESSION['watch_id'], PDO::PARAM_INT);
+$statement=$dbconnection->prepare($query);
+$statement->bindParam(':id',$id,PDO::PARAM_INT);
 $statement->execute();
 $watches = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -90,9 +90,9 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
         color: #ccc;
     }
 
-    .star.active {
-        color: #FFD700;
-    }
+.star.active {
+  color: #FFD700; /* Gold color */
+}
 
     .star.filled {
         color: #FFD700;
@@ -220,6 +220,7 @@ $name = $statement->fetch(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Leave a review</h4>
+                                    <small style="font-size: 20px;">Your email address will not be published. Required fields are marked *</small>
                                     <small style="font-size: 20px;">Your email address will not be published. Required fields are marked *</small>
                                     <div class="d-flex my-3">
 
