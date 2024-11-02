@@ -6,7 +6,6 @@ include('dbconnection.php');
 if (isset($_POST['watch_id'])) {
     $_SESSION['watch_id'] = $_POST['watch_id'];
     $id = $_SESSION['watch_id'];
-    echo $id;
 }
 $query = "SELECT  `watch_name`, `watch_description`, `watch_img`, `watch_price`, `watch_brand`,`watch_model`, `watch_gender`, `strap_material`, `quantity` FROM watches WHERE `watch_id`=:id";
 
@@ -29,32 +28,32 @@ if (isset($_POST['review'])) {
 
     if ($isLoggedIn) {
 
-    $id = $_SESSION['watch_id'];
-    $rating = $_POST['rating'];
-    $comment = $_POST['comment'];
-    $email = $_POST['email'];
+        $id = $_SESSION['watch_id'];
+        $rating = $_POST['rating'];
+        $comment = $_POST['comment'];
+        $email = $_POST['email'];
 
-    $query = "INSERT INTO `reviews` (`user_email`, `watch_id`, `rating`, `review_text`)
+        $query = "INSERT INTO `reviews` (`user_email`, `watch_id`, `rating`, `review_text`)
           SELECT `user_email`, :watch_id, :rating, :review_text 
           FROM `users` WHERE `user_id` = :user_id";
-    $stat = $dbconnection->prepare($query);
+        $stat = $dbconnection->prepare($query);
 
-    $data = [
-        //'user_email'=> $email,
-        'watch_id' => $id,
-        'rating' => $rating,
-        'review_text' => $comment,
-        'user_id' => $user_id,
+        $data = [
+            'watch_id' => $id,
+            'rating' => $rating,
+            'review_text' => $comment,
+            'user_id' => $user_id,
 
-    ];
+        ];
 
-    try {
-        $stat->execute($data);
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        try {
+            $stat->execute($data);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } else {
+        $updateMessage = "error";
     }
-} else {
-    $updateMessage = "error";
 }
 
 
@@ -195,8 +194,10 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary  bg-danger text-white px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                                Cart</button>
+
+                            <a onclick="add_cartWithQuantity(<?= htmlspecialchars($_SESSION['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($_SESSION['watch_id']) ?>">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
                         </div>
 
 
@@ -309,15 +310,19 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 h-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_name']; ?>">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
 
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a onclick="add_cart(<?= htmlspecialchars($item['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($item['watch_id']) ?>">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </a>
+
+                                    <a class="btn btn-outline-dark btn-square" onclick="addWishlist(<?= htmlspecialchars($item['watch_id']) ?>);" data-id="<?= htmlspecialchars($item['watch_id']) ?>"><i class="far fa-heart"></i></a>
 
 
-                                    <form action="detail.php" method="POST" style="display:inline;" class="btn btn-outline-dark btn-square">
+                                    <form action="detail.php" method="POST" style="display:inline;position:relative">
+                                        <a href="" class="btn btn-outline-dark btn-square"> <i class="fa fa-search"></i>
+                                        </a>
                                         <input type="hidden" name="watch_id" value="<?= $item['watch_id'] ?>">
-                                        <button type="submit" class="btn btn-outline-dark btn-square" style="border:none; background:none;">
-                                            <i class="fa fa-search"></i>
+                                        <button type="submit" style="border:none; background:none;display:hidden;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;">
                                         </button>
                                     </form>
 
@@ -327,7 +332,7 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                                 <a class="h6 text-decoration-none text-truncate" href=""><?php echo $item['watch_name']; ?></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
                                     <h5><?php echo $item['watch_price']; ?></h5>
-                                    <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                    <h6 class="text-muted ml-2"><del>123.00</del> JOD</h6>
                                 </div>
                             </div>
                         </div>
@@ -402,6 +407,8 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                 let currentValue = parseInt(quantityInput.value);
                 if (currentValue < maxQuantity) {
                     quantityInput.value = currentValue + 1;
+                } else {
+                    quantityInput.value = maxQuantity;
                 }
             });
 
@@ -414,7 +421,7 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
         });
     </script>
 
-<?php if ($updateMessage == "error"): ?>
+    <?php if ($updateMessage == "error"): ?>
         <script>
             Swal.fire({
                 icon: 'error',
@@ -424,7 +431,8 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                 showConfirmButton: false
             });
         </script>
-<?php endif; ?>
+    <?php endif; ?>
+    <script src="./addToCart.js"> </script>
 
 </body>
 
