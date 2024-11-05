@@ -165,7 +165,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function makeOrder() {
     const cartTotalItems = document.getElementById("cartTotalItems").innerText;
 
-    // Check if there are items in the cart before proceeding
     if (parseInt(cartTotalItems) <= 5) {
       Swal.fire({
         icon: "error",

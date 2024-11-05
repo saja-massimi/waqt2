@@ -213,14 +213,24 @@ include("../widgets/navbar.php");
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            alert("Message sent and data saved successfully!");
+                            //return sweet alert
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Message sent successfully!',
+                                showConfirmButton: true,
+                                confirmButtonText: 'OK'
+                            });
+
                         } else {
-                            alert("Error saving data.");
+                            console.log("Error saving data.");
+
                         }
                     })
                     .catch(error => console.error("Error inserting data:", error));
 
             }).catch(error => {
+
                 alert("Failed to send email.");
                 console.error("Email error:", error);
             });
