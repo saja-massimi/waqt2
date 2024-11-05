@@ -140,8 +140,8 @@ include("./components/aside.php");
     </div>
 </main>
 <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2" 
-       style="background:linear-gradient(310deg, #17ad37 0%, #98ec2d 100%)" 
+    <a class="fixed-plugin-button text-dark px-3 py-2" 
+       style="background:linear-gradient(310deg, #17ad37 0%, #98ec2d 100%);top:80px ; bottom:unset; position:absolute;" 
        onclick="showAddCouponDialog()">
         <i class="fa fa-plus" aria-hidden="true"></i>
     </a>

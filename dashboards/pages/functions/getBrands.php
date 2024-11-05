@@ -45,7 +45,7 @@ class BrandsTable {
                   <div class="card card-blog card-plain border  p-2">
                     <div class="position-relative">
                       <a class="d-block shadow-xl border-radius-xl ">
-                        <img src="../assets/products_img/'. $brand['brand_image'] .'" alt="img-blur-shadow" class=" img-fluid shadow border-radius-xl">
+                        <img style="object-fit:contain;height:250px;"src="../assets/products_img/'. $brand['brand_image'] .'" alt="img-blur-shadow" class=" img-fluid shadow border-radius-xl">
                       </a>
                     </div>
                     <div class="card-body px-1 pb-0 ">
