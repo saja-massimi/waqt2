@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
               {
                 description: "watch Order",
                 amount: {
-                  currency_code: "JOD",
+                  currency_code: "USD",
                   value: parseFloat(cartTotalItems).toFixed(2),
                 },
               },
