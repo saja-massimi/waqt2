@@ -129,7 +129,7 @@ if (isset($_SESSION['user'])) {
             </div>
 
             <!-- Right-side Icons -->
-            <div class="navbar-nav ms-auto d-flex align-items-center">
+            <div class="navbar-nav ms-auto d-flex align-items-center flex-row justify-content-center">
               <a href="<?= isset($_SESSION['user']) ? '../user_pages/wishlist.php' : '../auth/index.html' ?>" class="btn">
                 <i class="fas fa-heart text-dark"></i>
                 <span class="badge bg-secondary rounded-circle"><?= $result['total_number'] ?? 0 ?></span>
