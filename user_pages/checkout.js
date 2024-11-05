@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const cartTotalItems = document.getElementById("cartTotalItems").innerText;
 
-    // Check if there are items in the cart before proceeding
     if (parseInt(cartTotalItems) <= 5) {
       Swal.fire({
         icon: "error",
@@ -147,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customClass: { confirmButton: "btn btn-success" },
             buttonsStyling: false,
           }).then(() => {
-            window.location.href = "index.php";
+            window.location.href = "success.php";
           });
         } else {
           Swal.fire({
