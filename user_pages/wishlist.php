@@ -93,7 +93,7 @@ $products = $statment->fetchAll(PDO::FETCH_ASSOC);
                             <?php foreach ($products as $product): ?>
                                 <tr>
                                     <td class="align-middle"><?php echo $product['watch_name']; ?></td>
-                                    <td class="align-middle"><img src="<?php echo $product['watch_img']; ?>" alt="<?php echo $product['watch_name']; ?>" style="width: 50px;"></td>
+                                    <td class="align-middle"><img src="../../Project/dashboards/assets/products_img/<?php echo $product['watch_img']; ?>" alt="<?php echo $product['watch_name']; ?>" style="width: 50px;"></td>
                                     <td class="align-middle"><?php echo $product['watch_name']; ?></td>
                                     <td class="align-middle"><?php echo $product['watch_price']; ?> JOD</td>
 

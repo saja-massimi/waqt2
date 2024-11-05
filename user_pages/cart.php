@@ -40,7 +40,7 @@
                         ?>
                             <tr>
                                 <td class="align-middle">
-                                    <img src="<?= htmlspecialchars($productDetails['watch_img']) ?>" alt="" style="width: 50px;">
+                                    <img src="../../Project/dashboards/assets/products_img/<?= htmlspecialchars($productDetails['watch_img']) ?>" alt="" style="width: 50px;">
                                     <div><?= htmlspecialchars($productDetails['watch_name']) ?></div>
                                 </td>
                                 <td class="align-middle"><?= htmlspecialchars($productDetails['watch_price']) ?> JOD</td>
@@ -52,7 +52,7 @@
                                         </button>
                                         <input type="text" class="form-control form-control-sm  qun border-0 text-center" id="quantity-<?= $product_id ?>" value="<?= $product['quantity'] ?>" readonly>
                                         <!-- Increase Quantity -->
-                                        <button class="btn btn-sm btn-primary text-white adjust-quantity" data-action="increase" data-product-id="<?= $product_id ?>" data-quantity="<?= $product['quantity'] ?>">
+                                        <button class=" btn btn-sm btn-danger text-white adjust-quantity" data-action="increase" data-product-id="<?= $product_id ?>" data-quantity="<?= $product['quantity'] ?>">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>

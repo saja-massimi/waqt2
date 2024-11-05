@@ -179,9 +179,9 @@ include("../widgets/navbar.php");
             const contactData = {
                 name: document.getElementById("name").value,
                 email: document.getElementById("email").value,
-                phone_number: document.getElementById("phone_number").value,
+                phone_number: document.getElementById("phone").value,
                 subject: document.getElementById("subject").value,
-                message: document.getElementById("message").value
+                message: document.getElementById("Message").value
             };
 
             // Send email
@@ -189,7 +189,7 @@ include("../widgets/navbar.php");
                 Host: "smtp.elasticemail.com",
                 Username: "dina nafez",
                 Password: "D122E06D8037D94978B5634475CFBB3F2D42", // Use a secure method in production
-                To: 'nafez.dina@gmail.com',
+                To: 'omarfathiabed@gmail.com',
                 From: contactData.email,
                 Subject: contactData.subject,
                 Body: `
@@ -203,7 +203,7 @@ include("../widgets/navbar.php");
                 console.log("Email sent successfully:", response);
 
                 // Submit data to the PHP endpoint for database insertion
-                fetch("insert_contact.php", {
+                fetch("./controllers/contactController.php", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

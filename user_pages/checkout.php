@@ -56,9 +56,7 @@
     $currOrder = $orderModel->getCurrentOrder($user_id);
 
     $total = 0;
-    $couponModel = new CouponModel();
-    // if (isset($_SESSION['coupon_code']))
-    //     $coupon_discount = $couponModel->getCouponValue($_SESSION['coupon_code']);
+    $couponModel = new CouponModel();;
 
     ?>
 
@@ -98,6 +96,7 @@
                             <label>Country</label>
                             <input class="form-control" type="text" placeholder="country" readonly value="<?= $userData['user_country'] ?>">
                         </div>
+
                         <div class="col-md-6 form-group">
                             <label>City</label>
                             <select class="custom-select" disabled>
@@ -195,6 +194,7 @@
                                 ?>
                                 <h5>Total</h5>
                                 <h5 name="total" id="cartTotalItems"><?= $total + 5 ?> JOD</h5>
+
                             </div>
                         </div>
                 </div>
@@ -208,58 +208,15 @@
                     <div class="bg-light p-30">
                         <div class="form-group">
                             <!--Cash on delivery option-->
-                            <button type="button" class="btn btn-primary font-weight-bold bg-danger text-white my-2 py-3 w-100">Cash on Delivery</button>
 
-                            <div class="">
-                                <button type="button" class="btn btn-primary bg-warning text-white font-weight-bold my-2 py-3 w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">Paypal</button>
-                                <?php include "paymentvalid.php" ?>
-                                <!-- Modal for PayPal Payment -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title text-center w-100 text-warning bg-dark" id="exampleModalLabel " style="color: yellow; font-weight: 800;">
-                                                    PayPal Payment
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form id="paymentForm" method="POST">
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <input type="text" id="typeText" name="cardNumber" class="form-control" minlength="16" maxlength="16" placeholder="Card Number" required>
-                                                        <small style="color:red;"><?= $errors['cardNumber'] ?? ''; ?></small>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <input type="text" id="typeName" name="nameOnCard" class="form-control" placeholder="Name on Card" required>
-                                                        <small style="color:red;"><?= $errors['nameOnCard'] ?? ''; ?></small>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <input type="text" id="typeExp" name="expiration" class="form-control" minlength="5" maxlength="7" placeholder="Expiration (MM/YY)" required>
-                                                            <small style="color:red;"><?= $errors['expiration'] ?? ''; ?></small>
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <input type="password" id="typeCvv" name="cvv" class="form-control" minlength="3" maxlength="3" placeholder="CVV" required>
-                                                            <small style="color:red;"><?= $errors['cvv'] ?? ''; ?></small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn bg-warning text-white " data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary bg-danger text-white" name="submitBtn">Submit Payment</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <form id="orderForm" method="POST">
                                 <input type="hidden" name="order_user" value="<?= $user_id ?>">
                                 <input type="hidden" name="order_total" value="<?= $total + 5 ?>">
                                 <input type="hidden" name="order_address" value="<?= $userData['user_street'] . ', ' . $userData['user_city'] . ', ' . $userData['user_country'] ?>">
                                 <input type="hidden" name="order_status" value="pending">
                                 <input type="hidden" name="additional_address" value="">
-                                <button type="submit" class="btn btn-primary font-weight-bold  bg-primary text-white w-100" name="order">Place Order</button>
+                                <button type="submit" class="btn btn-success font-weight-bold  bg-success text-white w-100" name="order">Place Order</button>
                             </form>
                         </div>
 
@@ -272,7 +229,7 @@
     </div>
 
 
-    <?php include_once("../widgets/footer.php"); ?>
+
     <!-- Bootstrap JS (including Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

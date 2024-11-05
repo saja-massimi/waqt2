@@ -2,7 +2,7 @@
 include('dbconnection.php');
 
 // featured products
-$query = "SELECT * FROM watches LIMIT 4";
+$query = "SELECT * FROM watches WHERE is_deleted = 0 LIMIT 4 ";
 $statment = $dbconnection->prepare($query);
 $statment->execute();
 $items = $statment->fetchAll(PDO::FETCH_ASSOC);
@@ -43,7 +43,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
         <div class="landing-content">
             <h1>Welcome to WAQT</h1>
             <p>Waqt offers elegant, <br>high-quality watches blending classic craftsmanship with modern design, <br>prioritizing customer satisfaction and personalized service.</p>
-            <a href="./products.php" class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp">Shop Now</a>
+            <a href="./products.php" class="btn btn-light py-2 px-4 mt-3 animate__animated animate__fadeInUp">Shop Now</a>
         </div>
     </section>
 
@@ -176,7 +176,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
+                                <img class="img-fluid w-100" src="../../Project/dashboards/assets/products_img/<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_description']; ?>">
                                 <div class="product-action">
 
 
@@ -226,7 +226,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100" src="<?php echo $product['watch_img']; ?>" alt="<?php echo $product['watch_name']; ?>">
+                                <img style="min-height:500px;object-fit: cover;" class="img-fluid w-100" src="../../Project/dashboards/assets/products_img/<?php echo $product['watch_img']; ?>" alt="<?php echo $product['watch_name']; ?>">
                                 <div class="product-action">
 
 
@@ -276,7 +276,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top bg-danger "><i class="fa fa-angle-double-up text-dark "></i></a>
+    <a href="#top_page" class="btn btn-primary back-to-top bg-danger "><i class="fa fa-angle-double-up text-dark "></i></a>
 
 
     <!-- JavaScript Libraries -->

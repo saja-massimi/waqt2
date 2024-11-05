@@ -174,7 +174,7 @@
             <h1>About Us</h1>
             <p><span>Waqt</span> offers a carefully curated selection of watches that combine classic craftsmanship with modern design. We partner with trusted brands and artisans to ensure our watches are elegant, durable, and high-quality. Customer satisfaction is our priority, with personalized service from choosing the perfect watch to after-sale support. At <span>Waqt</span>, we’re dedicated to helping you make the most of your time.
             </p>
-            <a href="contact.php" id="Contact-a" class="btn d-flex justify-content-center w-25">Contact Us</a>
+            <a href="contact_us.php" id="Contact-a" class="btn d-flex justify-content-center w-25">Contact Us</a>
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@
       <div class="col-md-2 mb-4 ">
         <div class="card h-100">
           <div class="card-body">
-            <h5 class="card-title">Suhaib Bataineh</h5>
+            <h5 class="card-title">Sohiub Bataineh</h5>
             <p class="card-text">Software Engineer <br><span>Product Owner</span></p>
             <div class="social-icons">
               <a href="https://github.com/Sohiub-Bataina" target="_blank" class="card-link"><i class="fa-brands fa-square-github"></i></a>
@@ -219,8 +219,8 @@
             <h5 class="card-title">Dina Nafez</h5>
             <p class="card-text">Software Engineer <br><span>Full Stack</span></p>
             <div class="social-icons">
-              <a href="https://github.com/Dinanafez" class="card-link"><i class="fa-brands fa-square-github"></i></a>
-              <a href="https://www.linkedin.com/in/dina-nafez-al-akhras-b477b1246/" class="card-link"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="https://github.com/Dinanafez" class="card-link" target="_blank"><i class="fa-brands fa-square-github"></i></a>
+              <a href="https://www.linkedin.com/in/dina-nafez-al-akhras-b477b1246/" class="card-link" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -233,8 +233,8 @@
             <h5 class="card-title">Omar abed</h5>
             <p class="card-text">Software Engineer <br><span>Full Stack</span></p>
             <div class="social-icons">
-              <a href="https://github.com/OmarAbed16" class="card-link"><i class="fa-brands fa-square-github"></i></a>
-              <a href="https://www.linkedin.com/in/omarabed-/" class="card-link"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="https://github.com/OmarAbed16" target="_blank" class="card-link"><i class="fa-brands fa-square-github"></i></a>
+              <a href="https://www.linkedin.com/in/omarabed-/" class="card-link" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
             </div>
           </div>
         </div>

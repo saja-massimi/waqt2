@@ -41,7 +41,7 @@
         $query .= " AND strap_material IN (" . implode(', ', array_fill(0, count($materials), '?')) . ")";
         $params = array_merge($params, $materials);
     }
-    $search = isset($_GET['search_result']) ? $_GET['search_result'] : "";
+    $search =$_GET['searchs'] ?? "";
 
     if (!empty($search)) {
         $searchParam = '%' . $search . '%';
@@ -84,7 +84,7 @@
         <div class="col-lg-<?php echo $view == 1 ? '6' : '4'; ?> col-md-6 col-sm-6 pb-1">
             <div class="<?php echo $view == 1 ? 'row' : ''; ?> product-item bg-light mb-4">
                 <div class="<?php echo $view == 1 ? 'col-lg-6' : ''; ?> product-img position-relative overflow-hidden">
-                    <img class="img-fluid w-80" src="<?= htmlspecialchars($watch['watch_img']); ?>" alt="<?php echo htmlspecialchars($watch['watch_name']); ?>">
+                    <img style="min-height: 500px;object-fit: cover;" class="img-fluid w-80" src="../../Project/dashboards/assets/products_img/<?= htmlspecialchars($watch['watch_img']); ?>" alt="<?php echo htmlspecialchars($watch['watch_name']); ?>">
                     <div class="product-action">
 
                         <a onclick="add_cart(<?= htmlspecialchars($watch['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($watch['watch_id']) ?>">

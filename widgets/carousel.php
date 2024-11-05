@@ -74,7 +74,7 @@
 
                     <div class="item">
 
-                        <img src="../../Project/dashboards/assets/products_img/<?= htmlspecialchars($brand['brand_image']) ?>" alt="<?php echo htmlspecialchars($brand['brand_image']); ?>" />
+                        <img style="object-fit:contain;height:100px;" src="../../Project/dashboards/assets/products_img/<?= htmlspecialchars($brand['brand_image']) ?>" alt="<?php echo htmlspecialchars($brand['brand_image']); ?>" />
                     </div>
 
                 <?php endforeach; ?>

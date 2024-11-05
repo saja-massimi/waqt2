@@ -107,7 +107,7 @@ if (isset($_SESSION['user'])) {
   <div class="container-fluid bg-white text-dark mb-30">
     <div class="row px-xl-5 text-dark">
       <div class="col-lg-12">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 py-lg-0">
+        <nav id="top_page" class="navbar navbar-expand-lg navbar-light bg-light py-3 py-lg-0">
           <a class="navbar-brand" href="../user_pages/index.php">
             <img src="../img/logo1.png" width="50" height="50" class="d-inline" alt="logo">
             WAQT
