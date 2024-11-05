@@ -193,7 +193,8 @@
 
                                 ?>
                                 <h5>Total</h5>
-                                <h5 name="total" id="cartTotalItems"><?= $total + 5 ?> JOD</h5>
+                                <h5 name="total" id="cartTotalItems"><?= number_format($total + 5, 2) ?> JOD</h5>
+
 
                             </div>
                         </div>

@@ -19,7 +19,7 @@ document.getElementById("couponForm").addEventListener("submit", function (e) {
         document.querySelector('h6[name="copoun_value"]').innerHTML =
           "- " + data.discount * 100 + " %";
         document.querySelector('h5[name="total"]').innerHTML =
-          data.discounted_total + " JD";
+          parseFloat(data.discounted_total).toFixed(2) + " JOD";
 
         if (data.discounted_total <= 10) {
           Swal.fire({
@@ -34,7 +34,7 @@ document.getElementById("couponForm").addEventListener("submit", function (e) {
           return;
         }
         document.querySelector('input[name="order_total"]').value =
-          Math.round(data.discounted_total / 2) * 2 + " JD";
+          parseFloat(data.discounted_total).toFixed(2) + " JD";
         Swal.fire({
           icon: "success",
           title: "Coupon Applied",
