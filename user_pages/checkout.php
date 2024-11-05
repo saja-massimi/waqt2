@@ -217,7 +217,13 @@
                                 <input type="hidden" name="order_address" value="<?= $userData['user_street'] . ', ' . $userData['user_city'] . ', ' . $userData['user_country'] ?>">
                                 <input type="hidden" name="order_status" value="pending">
                                 <input type="hidden" name="additional_address" value="">
-                                <button type="submit" class="btn btn-success font-weight-bold  bg-success text-white w-100" name="order">Place Order</button>
+                                <button type="submit" class="btn btn-success font-weight-bold  bg-success text-white w-100" name="order">
+                                Cash on Delivery
+                                <i class="fas fa-money-bill-wave"></i>
+                                </button>
+                                
+                                <h4 style="text-align: center">or</h4>
+                                <hr>
                             </form>
 
                             <div style="margin-top:10px;" id="smart-button-container">

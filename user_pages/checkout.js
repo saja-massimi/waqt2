@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
               {
                 description: "watch Order",
                 amount: {
-                  currency_code: "USD",
+                  currency_code: "JOD",
                   value: parseFloat(cartTotalItems).toFixed(2),
                 },
               },
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customClass: { confirmButton: "btn btn-success" },
             buttonsStyling: false,
           }).then(() => {
-            window.location.href = "index.php";
+            window.location.href = "success.php";
           });
         } else {
           Swal.fire({
