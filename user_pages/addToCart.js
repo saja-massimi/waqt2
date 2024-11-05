@@ -1,4 +1,3 @@
-
 function add_cart(product_id) {
 
 

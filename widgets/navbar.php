@@ -104,8 +104,8 @@ if (isset($_SESSION['user'])) {
 
 <body>
   <!-- Navbar Start -->
-  <div class="container-fluid bg-white text-dark mb-30">
-    <div class="row px-xl-5 text-dark">
+  <div class="container-fluid bg-white text-dark mb-30 px-0">
+    <div class="row px-xl-0 text-dark">
       <div class="col-lg-12">
         <nav id="top_page" class="navbar navbar-expand-lg navbar-light bg-light py-3 py-lg-0">
           <a class="navbar-brand" href="../user_pages/index.php">

@@ -1,6 +1,7 @@
 <?php
 include("../widgets/navbar.php");
 include('dbconnection.php');
+include('./models/wishlistModel.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist_id'])) {
     $wishlist_id = $_POST['wishlist_id'];
@@ -13,9 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wishlist_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['watch_id'])) {
     $watch_id = $_POST['watch_id'];
     $cartModel = new cartModel();
+    $wishListModel = new wishlistModel();
     $cartID = $cartModel->getCartId($_SESSION['user']);
 
     if ($cartModel->addProductToCart($cartID, $watch_id)) {
+
+        // Remove product from wishlist
+        $wishListModel->deleteWishlist($_SESSION['user'], $watch_id);
+
         echo "
         <script>
         document.addEventListener('DOMContentLoaded', function() {

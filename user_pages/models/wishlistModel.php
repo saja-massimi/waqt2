@@ -24,14 +24,14 @@ class wishlistModel extends Dbh
 
     public function deleteWishlist($user_id, $product_id)
     {
-        $sql = "DELETE FROM wishlist WHERE user_id = ? AND product_id = ?";
+        $sql = "DELETE FROM wishlist WHERE user_id = ? AND watch_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id, $product_id]);
     }
 
     public function checkWishlist($user_id, $product_id)
     {
-        $sql = "SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?";
+        $sql = "SELECT * FROM wishlist WHERE user_id = ? AND watch_id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$user_id, $product_id]);
         $results = $stmt->fetchAll();

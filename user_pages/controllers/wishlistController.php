@@ -24,12 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($action) {
 
         case 'fav':
-            if ($wishlistModel->addWishlist($_SESSION['user'], $product_id)) {
 
-                echo json_encode(['status' => 'success', 'message' => 'Product added to Wishlist']);
+            if ($wishlistModel->checkWishlist($_SESSION['user'], $product_id)) {
+                echo json_encode(['status' => 'error', 'message' => 'Product already in Wishlist']);
             } else {
-                echo json_encode(['status' => 'error', 'message' => 'Failed to add product to Wishlist']);
+                if ($wishlistModel->addWishlist($_SESSION['user'], $product_id)) {
+                    
+                    echo json_encode(['status' => 'success', 'message' => 'Product added to Wishlist']);
+                } else {
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to add product to Wishlist']);
+                }
             }
+
             break;
 
 
