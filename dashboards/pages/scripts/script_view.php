@@ -30,4 +30,5 @@
         };
         xhr.send();
     }
+    //view order 
 </script>
