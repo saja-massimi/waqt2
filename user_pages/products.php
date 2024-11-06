@@ -72,10 +72,10 @@ $cat = $_GET['category'] ?? null;
                         <a class="breadcrumb-item text-dark" href="./index.php">Home</a>
                         <span class="breadcrumb-item active">Watches List</span>
                     </div>
-                    <form class="d-flex" action="" method="post">
-                        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-dark" type="submit" name="submit_search">Search</button>
-                    </form>
+                    <div class="d-flex" action="" method="post">
+                        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="search_result">
+                        <button class="btn btn-outline-dark" type="button" name="submit_search" id="search_results">Search</button>
+</div>
                 </nav>
             </div>
         </div>
@@ -180,7 +180,7 @@ $cat = $_GET['category'] ?? null;
                             <div>
                                 <button class="btn btn-sm btn-light" id="show_normal"><i class="fa fa-th-large"></i></button>
                                 <button class="btn btn-sm btn-light ml-2" id="show_line"><i class="fa fa-bars"></i></button>
-                                <?= "Your Search: " . $searchQuery; ?>
+                                <?= "Your Search:<span id='result_input'> " . $searchQuery."</span>" ?>
                                 <input type="hidden" id="search_result" value="<?= $searchQuery ?>">
                             </div>
 

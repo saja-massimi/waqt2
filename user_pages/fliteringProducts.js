@@ -37,6 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
     applyFilters();
   });
 
+  document.getElementById("search_results").addEventListener("click", () => {
+    applyFilters();
+  });
+
   if (allCategoryCheckbox.checked) {
     categoryCheckboxes.forEach((checkbox) => (checkbox.checked = true));
   }
@@ -79,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       view: Showing,
       searchs: search.value,
     }).toString();
-
+    document.getElementById("result_input").innerHTML = search.value;
     fetch("./controllers/filterResultsController.php?" + queryString)
       .then((response) => response.text())
       .then((data) => {
