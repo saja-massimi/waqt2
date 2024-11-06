@@ -10,13 +10,16 @@ include('dbconnection.php');
 if (isset($_SESSION['user'])) {
   $user_id = $_SESSION['user'];
 
+  // Get the total number of items in the wishlist
   $query = "SELECT COUNT(*) AS total_number FROM `wishlist` WHERE `user_id`=:user_id";
   $statment = $dbconnection->prepare($query);
   $statment->bindParam(':user_id', $user_id, PDO::PARAM_INT);
   $statment->execute();
   $result = $statment->fetch(PDO::FETCH_ASSOC);
+
   $cartModel = new cartModel();
 
+  // Get the total number of items in the cart
   $cartID = $cartModel->getCartId($_SESSION['user']);
   $cartTotal = $cartModel->getCartItemsCount($cartID);
 }
@@ -132,11 +135,11 @@ if (isset($_SESSION['user'])) {
             <div class="navbar-nav ms-auto d-flex align-items-center flex-row justify-content-center">
               <a href="<?= isset($_SESSION['user']) ? '../user_pages/wishlist.php' : '../auth/index.html' ?>" class="btn">
                 <i class="fas fa-heart text-dark"></i>
-                <span class="badge bg-secondary rounded-circle"><?= $result['total_number'] ?? 0 ?></span>
+                <span id="wishlist-counter" class="badge bg-secondary rounded-circle"><?= $result['total_number'] ?? 0 ?></span>
               </a>
               <a href="<?= isset($_SESSION['user']) ? 'cart.php' : '../auth/index.html' ?>" class="btn mx-2">
                 <i class="fas fa-shopping-cart text-dark"></i>
-                <span class="badge bg-secondary rounded-circle"><?= isset($_SESSION['user']) ? $cartTotal['count'] : 0 ?></span>
+                <span id="cart-counter" class="badge bg-secondary rounded-circle"><?= isset($_SESSION['user']) ? $cartTotal['count'] : 0 ?></span>
               </a>
               <?= isset($_SESSION['user']) ?
                 '<a href="../user_pages/customer_profile.php" class="btn">
@@ -148,6 +151,8 @@ if (isset($_SESSION['user'])) {
                 '<a href="../auth/index.html" class="nav-item nav-link">Sign In | Log In</a>'
               ?>
             </div>
+
+
           </div>
         </nav>
       </div>
@@ -159,8 +164,27 @@ if (isset($_SESSION['user'])) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../user_pages/addToCart.js"></script>
   <script>
+    // function updateCounters() {
+    //   $.ajax({
+    //     url: "getCounters.php",
+    //     type: "GET",
+    //     success: function(data) {
+    //       let response = JSON.parse(data);
+    //       $("#cart-counter").text(response.cart_count);
+    //       $("#wishlist-counter").text(response.wishlist_count);
+    //     },
+    //     error: function(xhr, status, error) {
+    //       console.error("Error updating counters:", error);
+    //     }
+    //   });
+    // }
+
+
     $(document).ready(function() {
+
+
       function toggleNavbarMethod() {
         if ($(window).width() > 992) {
           $('.navbar .dropdown').on('mouseover', function() {
