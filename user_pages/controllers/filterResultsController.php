@@ -66,6 +66,13 @@
             break;
     }
 
+
+    $stmt1 = $connection->prepare($query);
+
+    $stmt1->execute($params);
+    $watches1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+
     $query .= " LIMIT $offset, $itemsPerPage";
 
     $totalItems = $totalWatches;
@@ -79,7 +86,7 @@
     $view = $_GET['view'] ?? null;
     ?>
 
-
+<input type="hidden" value="<?=count($watches1)?>" id="php_total" >
     <?php foreach ($watches as $watch): ?>
         <div class="col-lg-<?php echo $view == 1 ? '6' : '4'; ?> col-md-6 col-sm-6 pb-1">
             <div class="<?php echo $view == 1 ? 'row' : ''; ?> product-item bg-light mb-4">
