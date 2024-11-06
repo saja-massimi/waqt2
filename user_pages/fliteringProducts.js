@@ -87,6 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.text())
       .then((data) => {
         productList.innerHTML = data;
+        document.getElementById("count").value =
+          document.getElementById("php_total").value;
+        updatePagination(1);
       })
       .catch((error) =>
         console.error("Error fetching filtered results:", error)
@@ -174,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }">Previous</a>
           </li>`;
 
-    for (let i = 1; i <= totalPages / 6; i++) {
+    for (let i = 1; i <= Math.ceil(totalPages / 6); i++) {
       const activeClass = i === currentPage ? "active" : "";
       paginationContainer.innerHTML += `<li class="page-item ${activeClass}">
                   <a class="page-link" href="#" data-page="${i}">${i}</a>
