@@ -235,7 +235,7 @@ $cat = $_GET['category'] ?? null;
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <a href="#" class="btn btn-primary back-to-top bg-danger"><i class="fa fa-angle-double-up"></i></a>
 
 
 

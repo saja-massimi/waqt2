@@ -15,12 +15,14 @@ $statement->execute();
 $watches = $statement->fetch(PDO::FETCH_ASSOC);
 
 
-$query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price, watch_brand, watch_model, watch_gender FROM watches ORDER BY RAND() LIMIT 4";
+$query = "SELECT watch_id, watch_name, watch_description, watch_img, watch_price, watch_brand, watch_model, watch_gender 
+FROM watches WHERE watch_brand = :watch_brand || watch_gender = :watch_gender LIMIT 4";
 
-
-$statment = $dbconnection->prepare($query);
-$statment->execute();
-$items = $statment->fetchAll(PDO::FETCH_ASSOC);
+$statement = $dbconnection->prepare($query);
+$statement->bindParam(':watch_brand', $watches['watch_brand'], PDO::PARAM_STR);
+$statement->bindParam(':watch_gender', $watches['watch_gender'], PDO::PARAM_STR);
+$statement->execute();
+$items = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 $isLoggedIn = isset($_SESSION['user']);
 $updateMessage = "";
@@ -308,7 +310,7 @@ $avg = $statt->fetch(PDO::FETCH_ASSOC);
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="img-fluid w-100 h-100" src="../../Project/dashboards/assets/products_img/<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_name']; ?>">
+                                <img style=' height: 400px !important;object-fit: cover;' class="img-fluid w-100 h-100" src="../../Project/dashboards/assets/products_img/<?php echo $item['watch_img']; ?>" alt="<?php echo $item['watch_name']; ?>">
                                 <div class="product-action">
 
                                     <a onclick="add_cart(<?= htmlspecialchars($item['watch_id']) ?>);" class="btn btn-outline-dark btn-square add-to-cart" data-id="<?= htmlspecialchars($item['watch_id']) ?>">
