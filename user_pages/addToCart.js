@@ -1,3 +1,20 @@
+
+function updateCounters() {
+    $.ajax({
+        url: "getCounters.php",
+        type: "GET",
+        success: function (data) {
+            let response = JSON.parse(data);
+            $("#cart-counter").text(response.cart_count);
+            $("#wishlist-counter").text(response.wishlist_count);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error updating counters:", error);
+        }
+    });
+}
+
+
 function add_cart(product_id) {
 
 
@@ -20,6 +37,7 @@ function add_cart(product_id) {
                     icon: "success"
                 });
 
+                updateCounters();
 
             } else {
                 Swal.fire({
@@ -56,6 +74,7 @@ function add_cartWithQuantity(product_id) {
                     icon: "success"
                 });
 
+                updateCounters();
 
             } else {
                 Swal.fire({
@@ -88,13 +107,14 @@ function addWishlist(product_id) {
                     title: "Product added to wishlist successfully!",
                     icon: "success"
                 });
+                updateCounters();
 
                 const wishlistButton = document.querySelector(`[data-id="${product_id}"] i`);
                 wishlistButton.classList.toggle('fas');
                 wishlistButton.classList.toggle('far');
             } else {
                 Swal.fire({
-                    title: "You need To Login First",
+                    title: data.message,
                     icon: "error"
                 });
             }

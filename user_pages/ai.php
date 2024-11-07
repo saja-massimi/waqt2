@@ -32,7 +32,7 @@ foreach ($randomProducts as $product) {
 
 
 // Set your API key here securely
-$apiKey = "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";
+$apiKey = "";
 
 // Get the incoming JSON data
 $requestBody = file_get_contents("php://input");
