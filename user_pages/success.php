@@ -15,12 +15,14 @@ $order_id = $orderModel->getLastOrderId();
 
 <body>
     <?php include("../widgets/navbar.php"); ?>
-    <div class="container d-flex justify-content-center align-items-center bg-light flex-column mb-3 vh-70">
+
+
+    <div class="container d-flex justify-content-center align-items-center  flex-column mb-3 vh-70 pt-3 pb-3">
 
 
         <h2 class="text-center mb-4" style="font-size: 2em;">Order Successful</h2>
         <div class="text-center">
-            <img src="./uploads/cart.png" alt="Cart" width="300px" class="mb-3">
+            <img src="./uploads/cart.png" alt="Cart" width="200px" class="mb-3">
             <p style="font-size: 1.5em;">Order number:</p>
             <p style="font-size: 1.8em;"><?php echo $order_id; ?></p>
             <p style="font-size: 1.2em;">Thank you for shopping with us. Your order is currently being processed</p>
@@ -30,8 +32,8 @@ $order_id = $orderModel->getLastOrderId();
         </div>
 
 
-    </div>
 
+    </div>
 
 
 </body>

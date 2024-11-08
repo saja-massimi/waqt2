@@ -7,7 +7,7 @@ session_start();
 $wishlistModel = new wishlistModel();
 
 if (!isset($_SESSION['user'])) {
-    echo json_encode(['status' => 'error', 'message' => 'You must be logged in to perform this action']);
+    echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
     exit;
 }
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode(['status' => 'error', 'message' => 'Product already in Wishlist']);
             } else {
                 if ($wishlistModel->addWishlist($_SESSION['user'], $product_id)) {
-
+                    
                     echo json_encode(['status' => 'success', 'message' => 'Product added to Wishlist']);
                 } else {
                     echo json_encode(['status' => 'error', 'message' => 'Failed to add product to Wishlist']);

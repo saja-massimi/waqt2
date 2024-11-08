@@ -290,20 +290,20 @@
             <h3>Edit Profile</h3>
             <form method="post" action="">
                 <label for="name">Name:</label>
-                <input class="form-control" type="text" name="name" value="<?php echo $user['user_name'] ?? ''; ?>">
+                <input class="form-control" type="text" name="name" value="<?php echo $user['user_name'] ?? ''; ?>" required>
 
                 <label for="email">Email:</label>
-                <input class="form-control" type="email" name="email" value="<?php echo $user['user_email'] ?? ''; ?>" class="email">
+                <input class="form-control" type="email" name="email" value="<?php echo $user['user_email'] ?? ''; ?>" class="email" required>
 
                 <label for="phone">Phone:</label>
-                <input class="form-control" type="tel" name="phone" value="<?php echo $user['user_phoneNum'] ?? ''; ?>">
+                <input class="form-control" type="tel" name="phone" value="<?php echo $user['user_phoneNum'] ?? ''; ?>" required>
 
                 <label for="country">Country:</label>
-                <input class="form-control" type="text" name="country" value="<?php echo $user['user_country'] ?? ''; ?>">
+                <input class="form-control" type="text" name="country" value="<?php echo $user['user_country'] ?? ''; ?>" required>
 
 
                 <label for="street">Street:</label>
-                <input class="form-control" type="text" name="street" value="<?php echo $user['user_street'] ?? ''; ?>">
+                <input class="form-control" type="text" name="street" value="<?php echo $user['user_street'] ?? ''; ?>" required>
 
                 <label for="city">City:</label>
                 <select class="custom-select form-control" name="city">
@@ -334,10 +334,10 @@
             <h3>Edit Password</h3>
             <form method="post" action="customer_profile.php">
                 <label for="old_password">Old Password:</label>
-                <input class="form-control" type="password" name="old_password" placeholder="Enter Old Password">
+                <input class="form-control" type="password" name="old_password" placeholder="Enter Old Password" required>
 
                 <label for="new_password">New Password:</label>
-                <input class="form-control" type="password" name="new_password" placeholder="Enter New Password">
+                <input class="form-control" type="password" name="new_password" placeholder="Enter New Password" required>
 
                 <!-- Edit Password Button -->
                 <div class="button-group">

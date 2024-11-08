@@ -63,6 +63,12 @@ if (!isset($_SESSION['user'])) {
       $user_createdDate = $start_user['user_createdDate'] ?? "";
 
    
+
+      if ($user_role=="customer") {
+        header('Location: ../../auth');
+        exit();
+
+      }
 }
 
 ?>

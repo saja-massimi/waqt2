@@ -110,26 +110,27 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
         <div class="row px-xl-5 pb-3">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-check m-0 mr-5" style="color:black"></h1>
-                    <h5 class="font-weight-semi-bold m-3">Quality Product</h5>
+                    <h1 class="fa fa-check  m-2 mr-5" style="color:black"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-shipping-fast m-0 mr-5" style="color:black"></h1>
-                    <h5 class="font-weight-semi-bold m-3"> Free Shipping</h5>
+                    <h1 class="fa fa-shipping-fast  m-2 mr-5" style="color:black"></h1>
+                    <h5 class="font-weight-semi-bold m-0"> Free Shipping</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fas fa-exchange-alt m-0 mr-5" style="color:black"></h1>
-                    <h5 class="font-weight-semi-bold m-3"> 14-Day Return</h5>
+                <h1 class="fas fa-exchange-alt m-2 mr-5" style="color:black; font-size: 20px;"></h1>
+
+                    <h5 class="font-weight-semi-bold m-0"> 14-Day Return</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
-                    <h1 class="fa fa-phone-volume m-0 mr-5 beta" style="color:black"></h1>
-                    <h5 class="font-weight-semi-bold m-3"> 24/7 Support</h5>
+                    <h1 class="fa fa-phone-volume  m-2 mr-5 beta" style="color:black"></h1>
+                    <h5 class="font-weight-semi-bold m-0"> 24/7 Support</h5>
                 </div>
             </div>
         </div>
@@ -146,7 +147,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
                     <img class="img-fluid" src="../img/gallery/new_product1.png" alt="">
                     <div class="offer-text">
                         <h6 class="text-white text-uppercase"></h6>
-                        <h3 class="text-white mb-3">Men's Luxury Always Shines</h3>
+                        <h3 class="text-white mb-3">Men's luxury always shines</h3>
                         <a href="./products.php?category=men" class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp">Shop Now</a>
                     </div>
                 </div>
@@ -155,7 +156,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <div class="product-offer mb-30" style="height: 300px;">
                     <img class="img-fluid" src="../img/gallery/new_product3.png" alt="">
                     <div class="offer-text">
-                        <h3 class="text-white mb-3">Women's Luxury Always Shines</h3>
+                        <h3 class="text-white mb-3">Women's luxury always shines</h3>
                         <a href="./products.php?category=women" class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp">Shop Now</a>
                     </div>
                 </div>
@@ -167,7 +168,7 @@ $brands = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">Featured Products</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class=" pr-3">Our Products</span></h2>
         <div class="row px-xl-5">
             <?php if (count($items) == 0): ?>
                 <p class="text-center w-100">No products available.</p>

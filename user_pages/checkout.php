@@ -217,19 +217,19 @@
                                 <input type="hidden" name="order_status" value="pending">
                                 <input type="hidden" name="additional_address" value="">
                                 <button type="submit" class="btn btn-success font-weight-bold  bg-success text-white w-100" name="order">
-                                    Cash on Delivery
-                                    <i class="fas fa-money-bill-wave"></i>
+                                Cash on Delivery
+                                <i class="fas fa-money-bill-wave"></i>
                                 </button>
-
+                                
                                 <h4 style="text-align: center">or</h4>
                                 <hr>
                             </form>
 
                             <div style="margin-top:10px;" id="smart-button-container">
-                                <div style="text-align: center">
-                                    <div id="paypal-button-container"></div>
-                                </div>
-                            </div>
+  <div style="text-align: center">
+    <div id="paypal-button-container"></div>
+  </div>
+</div>
                         </div>
 
                     </div>
@@ -247,8 +247,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script
-        src="https://www.paypal.com/sdk/js?client-id=Aa--k9gAL2zd1YhSRmjKbIYHM8KjgukOF7OFTGZkehXDjIWt2MJOBGt5pkNRAQYv4NP6fsEEbpZ6Jprb&enable-funding=venmo&currency=USD"
-        data-sdk-integration-source="button-factory"></script>
+  src="https://www.paypal.com/sdk/js?client-id=Aa--k9gAL2zd1YhSRmjKbIYHM8KjgukOF7OFTGZkehXDjIWt2MJOBGt5pkNRAQYv4NP6fsEEbpZ6Jprb&enable-funding=venmo&currency=USD"
+  data-sdk-integration-source="button-factory"
+></script>
     <script src="./checkout.js"></script>
 </body>
 

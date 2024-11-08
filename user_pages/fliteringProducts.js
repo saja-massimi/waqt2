@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
   handleAllCheckbox(allBrandCheckbox, brandCheckboxes);
   handleAllCheckbox(allMaterialCheckbox, materialCheckboxes);
 
+  // Function to apply filters
   function applyFilters() {
     const productList = document.getElementById("productList");
     productList.innerHTML =
@@ -165,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updatePagination(currentPage) {
-    const totalPages = document.getElementById("count").value; 
+    const totalPages = document.getElementById("count").value; // This should be dynamically set based on product count
     paginationContainer.innerHTML = "";
 
     const prevDisabled = currentPage === 1 ? "disabled" : "";
